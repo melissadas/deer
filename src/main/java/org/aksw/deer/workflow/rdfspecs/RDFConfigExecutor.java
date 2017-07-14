@@ -22,6 +22,7 @@ import org.aksw.deer.modules.nlp.NLPModule;
 import org.aksw.deer.modules.predicateconformation.PredicateConformationModule;
 import org.aksw.deer.operators.CloneOperator;
 import org.aksw.deer.operators.MergeOperator;
+import org.aksw.deer.operators.fusion.GeoFusionOperator;
 import org.apache.jena.query.QueryExecution;
 import org.apache.jena.query.QueryExecutionFactory;
 import org.apache.jena.query.QueryFactory;
@@ -158,6 +159,11 @@ public class RDFConfigExecutor {
         CloneOperator splitOperator = new CloneOperator();
         List<Model> resultModels = splitOperator.process(inputDatasets, moduleParameters);
         return resultModels.get(0);
+      }
+      if (type.equals(SPECS.GeoFusionOperator)) {
+    	  GeoFusionOperator geoFusionOperator = new GeoFusionOperator();
+    	  List<Model> resultModels = geoFusionOperator.process(inputDatasets, moduleParameters);
+    	  return resultModels.get(0);
       }
     }
     logger.error(operator + " operator is not yet implemented,\n" +

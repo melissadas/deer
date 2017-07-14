@@ -1,0 +1,11 @@
+@prefix : <http://example.org/deer/geofusion/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix geo: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+
+
+:r1 rdfs:label "Place in second source";
+	rdfs:label "Place in first source";
+	owl:sameAs :r2;
+	geo:lat "51.3487";
+	geo:long "12.4512".

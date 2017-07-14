@@ -44,6 +44,7 @@ public class SPECS {
   public static final Resource Operator = resource("Operator");
   public static final Resource CloneOperator = resource("CloneOperator");
   public static final Resource MergeOperator = resource("MergeOperator");
+  public static final Resource GeoFusionOperator = resource("GeoFusionOperator");
   public static final Resource OperatorParameter = resource("OperatorParameter");
   public static final Resource CloneOperatorParameter = resource("CloneOperatorParameter");
   public static final Resource MergeOperatorParameter = resource("MergeOperatorParameter");

@@ -1,0 +1,23 @@
+@prefix : <http://geoknow.org/specsontology/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix geo: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+
+:d1		a				:Dataset ;
+		:hasUri			<http://dbpedia.org/resource/Berlin> .
+:d2		a				:Dataset ;
+		:hasUri			<http://sws.geonames.org/resource/Berlin> .
+:d3		a				:Dataset .
+
+:o1		a				:Operator, :GeoFusionOperator  ;
+		rdfs:label		"Geospatial Fusion operator" ;
+		:hasInput		:d1, :d2 ;
+		:hasOutput		:d3 ;
+		:hasParameter	:p1-1, :p1-2.
+
+:p1-1	a				:OperatorParameter;
+		:hasKey			"fusionAction" ;
+		:hasValue		"takeMostDetailed" .
+
+:p12	a				:OperatorParameter;
+		:hasKey			"mergeOtherStatements" ;
+		:hasValue		"true" .

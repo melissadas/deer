@@ -11,3 +11,8 @@ nbactions.xml
 # IntelliJ IDEA #
 *.iml
 .idea/
+
+# Eclipse
+.project
+.classpath
+.settings/
