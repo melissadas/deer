@@ -106,6 +106,15 @@ public class GeoFusionOperator implements DeerOperator {
 
 		GeoFusionAction action = GeoFusionAction.valueOf(parameters.get(FUSION_ACTION_PARAM));
 		boolean mergeOtherStatements = Boolean.valueOf(parameters.getOrDefault(MERGE_OTHER_STATEMENTS_PARAM, "true"));
+		
+		// TODO get rid of this quick fix: if there's no sameAs in model A, swap them ;-)
+		// won't be necessary with new DEER configs supporting lists of datasets/parameters
+		if (!models.get(0).contains(null, OWL.sameAs)) {
+			logger.info("No owl:sameAs statements detected in first model, attempting to swap model A and model B");
+			Model temp = models.get(1);
+			models.set(1, models.get(0));
+			models.set(0, temp);
+		}
 
 		// Fuse geometries
 		Model targetModel = ModelFactory.createDefaultModel();

@@ -3,10 +3,12 @@
 @prefix geo: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
 
 :d1		a				:Dataset ;
-		:hasUri			<http://dbpedia.org/resource/Berlin> .
+		:inputFile			"/home/wauer/git/DEER/src/test/resources/geofusion/firstSource.ttl" .
 :d2		a				:Dataset ;
-		:hasUri			<http://sws.geonames.org/resource/Berlin> .
-:d3		a				:Dataset .
+		:inputFile			"/home/wauer/git/DEER/src/test/resources/geofusion/secondSource.ttl" .
+:d3		a				:Dataset ;
+		:outputFile			"output.ttl" ;
+		:outputFormat		"Turtle" .
 
 :o1		a				:Operator, :GeoFusionOperator  ;
 		rdfs:label		"Geospatial Fusion operator" ;
@@ -18,6 +20,6 @@
 		:hasKey			"fusionAction" ;
 		:hasValue		"takeMostDetailed" .
 
-:p12	a				:OperatorParameter;
+:p1-2	a				:OperatorParameter;
 		:hasKey			"mergeOtherStatements" ;
 		:hasValue		"true" .
