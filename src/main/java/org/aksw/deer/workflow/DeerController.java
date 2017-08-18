@@ -84,6 +84,9 @@ public class DeerController {
     }
     if (args[0].equals("-s") || args[0].toLowerCase().equals("--server")) {
       Server.main(args);
+      System.out.println("Starting DEER server - press enter to stop server");
+      System.in.read();
+      System.out.println("Stopping DEER server...");
       System.exit(0);
     }
     //program didn't terminate until here so run RDF config mode
