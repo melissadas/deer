@@ -55,6 +55,7 @@ public class RDFgeoPreProcessing {
 
 	static String stringLong4;
 	static ArrayList<String>allStringLong4=new ArrayList<String>();
+
 	static ArrayList<Resource> allSubjects=new ArrayList<Resource>();
 	static Resource sub;
 
@@ -252,17 +253,18 @@ public class RDFgeoPreProcessing {
 		ArrayList<String>strings=new ArrayList<String>();
 		strings=processModel(m1);
 		List<RDFNode>nodes=new ArrayList<RDFNode>();
+
+
+		Property p2=	ResourceFactory.createProperty(ngeo, "toWKT");
+		Property p3=	ResourceFactory.createProperty(ngeo, "posList");
+		Resource resource= ResourceFactory.createResource(ngeo+"LinearRing");
 		for(int i=0;i<strings.size();i++) {
 
 			RDFNode node1= ResourceFactory.createStringLiteral(strings.get(i));
 
 			nodes.add(node1);}
 
-		Property p1=	ResourceFactory.createProperty(ngeo, "exterior");
-		Property p2=	ResourceFactory.createProperty(ngeo, "toWKT");
-		Property p3=	ResourceFactory.createProperty(ngeo, "posList");
-
-		Iterator<Statement> iter = m.listStatements(null,p3,(RDFNode)null);
+		Iterator<Statement> iter = m.listStatements(null,RDF.type,resource);
 
 		while(iter.hasNext())
 		{
@@ -281,43 +283,6 @@ public class RDFgeoPreProcessing {
 
 	}
 
-	/*	public static Model removeProcessProperty(Model m)
-	{
-		Model m1= ModelFactory.createDefaultModel();
-		m1.add(m);
-
-		ArrayList<String>strings=new ArrayList<String>();
-		strings=processModel(m1);
-		for(int i=0; i<strings.size();i++) {
-
-			//String string1=strings.get(0);
-			RDFNode node1= ResourceFactory.createStringLiteral(strings.get(i));
-			ArrayList<RDFNode>nodes=new ArrayList<RDFNode>();
-			nodes.add(node1);
-			Property p1=	ResourceFactory.createProperty(ngeo, "exterior");
-			Property p2=	ResourceFactory.createProperty(ngeo, "toWKT");
-			Property p3=	ResourceFactory.createProperty(ngeo, "posList");
-			//	Property p2=	ResourceFactory.createProperty(ngeo, "toWKT");
-
-			StmtIterator iter = m.listStatements(null,p3,(RDFNode)null);
-			while(iter.hasNext())
-			{
-				Statement st = iter.next();
-				sub =st.getSubject();
-
-				System.out.println("statements are ... "+st);
-
-
-			}
-			m.add(sub, p2, nodes.get(i));
-
-			System.out.println(" the first string is "+strings.get(0));
-			System.out.println(" the second string is "+strings.get(1));
-			//	m.remove(sub, p3,(RDFNode)null);
-		}
-		return m;
-
-	}*/
 
 
 
@@ -325,21 +290,17 @@ public class RDFgeoPreProcessing {
 
 		Model model= Reader.readModel("/home/abdullah/deer/NUT_DATA/DE_geometry.ttl");
 
-		/*		ArrayList<String>allStrings=new ArrayList<String>();
-		allStrings=processModel(model);
-		String string1=allStrings.get(0);
-		String string2=allStrings.get(1);String string3=allStrings.get(2);String string4=allStrings.get(3);
-		System.out.println("string 1 is "+string1);
-		System.out.println("string 2 is "+string2);
-		System.out.println("string 3 is "+string3);
-		System.out.println("string 4 is "+string4);*/
-
-
 		Model newModel= postProcessModel( model);
 
 
 		String outputFile= "/home/abdullah/deer/NUT_DATA/DE_geometry_out.ttl";
 		Writer.writeModel(newModel, "TTL", outputFile);
+
+		//	Model model1= Reader.readModel(outputFile);
+		//	Model newModel1= removeProcessProperty(model1);
+
+		//	String outputFile1= "/home/abdullah/deer/NUT_DATA/DE_geometry_out1.ttl";
+		//	Writer.writeModel(newModel1, "TTL", outputFile1);
 
 
 	}
