@@ -13,23 +13,25 @@ import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.ResourceFactory;
 import org.apache.jena.rdf.model.Statement;
 
-public class RemoveLatLongProperty {
-
+public class RemovemoreProperty {
 	static String ngeo = "http://geovocab.org/geometry#";
 	static String geo  = "http://www.w3.org/2003/01/geo/wgs84_pos#";
+	static String rdf ="http://www.w3.org/1999/02/22-rdf-syntax-ns#";
 
 	static ArrayList<Resource> subjects= new ArrayList<Resource>() ;
 	static ArrayList <RDFNode> rdfNodes=new ArrayList <RDFNode>();
 	static ArrayList <Property> properties =new ArrayList <Property>();
 
-	public static Model removeLatLongPropertyProcess(Model m)
+	public static Model removeMorePropertyProcess(Model m)
 	{
 
+		Property p1=	ResourceFactory.createProperty(rdf, "nil");
+		Property p2=	ResourceFactory.createProperty(rdf, "first");
+		Property p3=	ResourceFactory.createProperty(rdf, "rest");
 
-		Property p1=	ResourceFactory.createProperty(geo, "lat");
-		Property p2=	ResourceFactory.createProperty(geo, "long");
 		properties.add(p1);
 		properties.add(p2);
+		properties.add(p3);
 		for(int j=0;j<properties.size();j++) {
 			Iterator<Statement>iter = m.listStatements(null,properties.get(j),(RDFNode)null);
 			while(iter.hasNext())
@@ -58,13 +60,13 @@ public class RemoveLatLongProperty {
 
 	public static void main(String[] args) throws IOException {
 
-		String inputtFile= "/home/abdullah/deer/NUT_DATA/DE_geometry_out1.ttl";
+		String inputtFile= "/home/abdullah/deer/NUT_DATA/DE_geometry_out2.ttl";
 
 		Model model= Reader.readModel(inputtFile);
 
-		Model newModel= removeLatLongPropertyProcess( model);
+		Model newModel= removeMorePropertyProcess( model);
 
-		String outputFile= "/home/abdullah/deer/NUT_DATA/DE_geometry_out2.nt";
+		String outputFile= "/home/abdullah/deer/NUT_DATA/DE_geometry_out3.nt";
 
 		Writer.writeModel(newModel, "NT", outputFile);
 
