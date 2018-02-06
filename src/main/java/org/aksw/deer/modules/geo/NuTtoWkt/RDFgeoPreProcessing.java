@@ -1,4 +1,4 @@
-package org.aksw.deer.modules.geo;
+package org.aksw.deer.modules.geo.NuTtoWkt;
 
 import java.io.IOException;
 import org.apache.jena.rdf.model.ResourceRequiredException;
@@ -169,10 +169,10 @@ public class RDFgeoPreProcessing {
 
 		}
 
-		String string1=toWKT(allStringLat1, allStringLong1);
-		String string2=toWKT(allStringLat2, allStringLong2);
-		String string3=toWKT(allStringLat3, allStringLong3);
-		String string4=toWKT(allStringLat4, allStringLong4);
+		String string1=toWKT(allStringLong1,allStringLat1);
+		String string2=toWKT(allStringLong2,allStringLat2);
+		String string3=toWKT(allStringLong3,allStringLat3);
+		String string4=toWKT( allStringLong4,allStringLat4);
 
 		ArrayList<String>allStrings=new ArrayList<String>();
 
@@ -238,7 +238,7 @@ public class RDFgeoPreProcessing {
 			string+=lat.get(i)+" "+lon.get(i)+", ";
 		}
 		string="("+ string+")";
-		string="POLYGON"+string.substring(string.indexOf("("),string.indexOf(")")-2)+")";
+		string="POLYGON "+"("+string.substring(string.indexOf("("),string.indexOf(")")-2)+")"+")";
 
 		return string;
 
@@ -285,7 +285,6 @@ public class RDFgeoPreProcessing {
 
 
 
-
 	public static void main(String[] args) throws IOException {
 
 		Model model= Reader.readModel("/home/abdullah/deer/NUT_DATA/DE_geometry.ttl");
@@ -295,12 +294,6 @@ public class RDFgeoPreProcessing {
 
 		String outputFile= "/home/abdullah/deer/NUT_DATA/DE_geometry_out.ttl";
 		Writer.writeModel(newModel, "TTL", outputFile);
-
-		//	Model model1= Reader.readModel(outputFile);
-		//	Model newModel1= removeProcessProperty(model1);
-
-		//	String outputFile1= "/home/abdullah/deer/NUT_DATA/DE_geometry_out1.ttl";
-		//	Writer.writeModel(newModel1, "TTL", outputFile1);
 
 
 	}

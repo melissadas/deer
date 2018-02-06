@@ -1,4 +1,4 @@
-package org.aksw.deer.modules.geo;
+package org.aksw.deer.modules.geo.NuTtoWkt;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -21,6 +21,7 @@ public class RmovePropertyProcess {
 
 	static ArrayList<Resource> subjects= new ArrayList<Resource>() ;
 	static ArrayList <RDFNode> rdfNodes=new ArrayList <RDFNode>();
+
 	public static Model removePropertyProcess(Model m)
 	{
 
