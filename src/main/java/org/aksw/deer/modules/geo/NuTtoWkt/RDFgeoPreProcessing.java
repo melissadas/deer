@@ -1,7 +1,6 @@
 package org.aksw.deer.modules.geo.NuTtoWkt;
 
 import java.io.IOException;
-import org.apache.jena.rdf.model.ResourceRequiredException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -17,7 +16,6 @@ import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.ResourceFactory;
 import org.apache.jena.rdf.model.Statement;
-import org.apache.jena.rdf.model.StmtIterator;
 import org.apache.jena.vocabulary.OWL;
 import org.apache.jena.vocabulary.RDF;
 
@@ -172,7 +170,7 @@ public class RDFgeoPreProcessing {
 		String string1=toWKT(allStringLong1,allStringLat1);
 		String string2=toWKT(allStringLong2,allStringLat2);
 		String string3=toWKT(allStringLong3,allStringLat3);
-		String string4=toWKT( allStringLong4,allStringLat4);
+		String string4=toWKT(allStringLong4,allStringLat4);
 
 		ArrayList<String>allStrings=new ArrayList<String>();
 
@@ -256,7 +254,7 @@ public class RDFgeoPreProcessing {
 
 
 		Property p2=	ResourceFactory.createProperty(ngeo, "toWKT");
-		Property p3=	ResourceFactory.createProperty(ngeo, "posList");
+		//Property p3=	ResourceFactory.createProperty(ngeo, "posList");
 		Resource resource= ResourceFactory.createResource(ngeo+"LinearRing");
 		for(int i=0;i<strings.size();i++) {
 
