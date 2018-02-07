@@ -5,10 +5,10 @@
 :d1		a				:Dataset ;
 
 
-		:inputFile			"/home/abddatascienceadmin/deer/datasets/6/input.nt" .
+		:inputFile			"/home/abddatascienceadmin/deer/Data_4/OutgeoDataStreet10%.ttl" .
 
 :d2		a				:Dataset ;
-		:outputFile		"/home/abddatascienceadmin/deer/datasets/6/output.ttl" ;
+		:outputFile		"/home/abddatascienceadmin/deer/datasets/6/output5%_.ttl" ;
 		:outputFormat	"Turtle" .
 
 :geoL	        a			:Module, :GeoLocatorModule  ;
@@ -19,11 +19,14 @@
 
 :geoPram1	a		        :ModuleParameter, :GeoLocatorModuleParameter ;
 		:hasKey			"inputaddressproperty" ;
-		:hasValue		"http://deer.org/street" .
+		:hasValue		"http://ex.org/a#street" .
 
 :geoPram2	a		       :ModuleParameter, :GeoLocatorModuleParameter ;
 		:hasKey			"outputlatproperty" ;
-		:hasValue		"http://deer.org/lat" .
+		:hasValue		"http://ex.org/a#lat" .
+:geoPram3	a		       :ModuleParameter, :GeoLocatorModuleParameter ;
+		:hasKey			"outputlatproperty" ;
+		:hasValue		"http://ex.org/a#lon" .
 
 
 
