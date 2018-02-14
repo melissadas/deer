@@ -9,65 +9,53 @@ import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.Polygon;
 import com.vividsolutions.jts.io.ParseException;
 import com.vividsolutions.jts.io.WKTReader;
-import com.vividsolutions.jts.simplify.DouglasPeuckerSimplifier;
+import com.vividsolutions.jts.simplify.TopologyPreservingSimplifier;
 
 public class GeomSimplification {
 
 
+	public static ArrayList<String> geomSimpilfication(ArrayList<String>strings, double distanceTolerance) throws ParseException{
 
-	//static ArrayList<String>strings= new ArrayList<String>();
-
-	static ArrayList<ArrayList<String>> allReducedGeom= new  ArrayList<ArrayList<String>>();
-	static ArrayList<String> reducedGeom =new 	ArrayList<String>(); 
-
-
-	static ArrayList<Geometry> pL= new ArrayList<Geometry>();
-	static ArrayList<Geometry> geom= new ArrayList<Geometry>();
-
-
-	private static double d1=0.09;
-	private static double d2=0.1;
-	private static double d3=0.11;
-
-
-	static ArrayList<Double> allD=new ArrayList<Double>();
-
-	public static ArrayList<ArrayList<String>> geomSimpilfication(ArrayList<String>strings) throws ParseException{
-
+		ArrayList<String> simpilfiedGeom =new 	ArrayList<String>(); 
+		ArrayList<Geometry> pLs= new ArrayList<Geometry>();
+		ArrayList<Geometry> geom= new ArrayList<Geometry>();
 
 		GeometryFactory geometryFactory = JTSFactoryFinder.getGeometryFactory( null );
 		WKTReader reader = new WKTReader( geometryFactory );
 
-		allD.add(d1);
-		allD.add(d2);
-		allD.add(d3);
 
-		for(int j=0;j<allD.size();j++){
+		for(int i=0;i<strings.size();i++) {
 
-			for(int i=0;i<strings.size();i++) {
+			Geometry pLtemp= (Polygon) reader.read(strings.get(i));
+			pLs.add(pLtemp);
 
-
-				Geometry pLtemp= (Polygon) reader.read(strings.get(i));
-				pL.add(pLtemp);
-
-
-				//System.out.println("P"+i+" is : "+ pL.get(i));
-
-
-				//double distanceTolerance = 0;
-				Geometry geomTemp=	DouglasPeuckerSimplifier.simplify(pL.get(i), allD.get(j));
-				geom.add(geomTemp);
-				String str=geom.get(i).toString();
-				reducedGeom.add(str);
-				//System.out.println("geom"+i+" is : "+ geom.get(i));
-
-			}
-			allReducedGeom.add(reducedGeom);
-
-			// TODO Auto-generated method stub
-
+			Geometry geomTemp=	TopologyPreservingSimplifier.simplify(pLs.get(i),distanceTolerance);
+			geom.add(geomTemp);
+			String str=geom.get(i).toString();
+			simpilfiedGeom.add(str);
 		}
-		return allReducedGeom;}
+
+		return simpilfiedGeom;
+	}
+
+	public static ArrayList<String> geomMean(ArrayList<String>strings) throws ParseException{
+
+		ArrayList<Geometry> pL= new ArrayList<Geometry>();
+		ArrayList<String> strs=new ArrayList<String>();
+
+		GeometryFactory geometryFactory = JTSFactoryFinder.getGeometryFactory( null );
+		WKTReader reader = new WKTReader( geometryFactory );
+
+		for(int i=0;i<strings.size();i++) {
+
+			Geometry pLtemp= (Polygon) reader.read(strings.get(i));
+			pL.add(pLtemp);
+			String str=pL.get(i).getCentroid().toString();
+			strs.add(str);
+		}
+
+		return strs;
+	}
 
 
 }

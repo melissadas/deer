@@ -1,11 +1,8 @@
 package org.aksw.deer.modules.geo.NuTtoWkt;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import org.aksw.deer.io.Reader;
-import org.aksw.deer.io.Writer;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.RDFNode;
@@ -24,10 +21,7 @@ public class RmovePropertyProcess {
 
 	public static Model removePropertyProcess(Model m)
 	{
-
-
 		Property p3=	ResourceFactory.createProperty(ngeo, "posList");
-
 		Iterator<Statement>iter = m.listStatements(null,p3,(RDFNode)null);
 		while(iter.hasNext())
 		{
@@ -36,33 +30,30 @@ public class RmovePropertyProcess {
 			RDFNode rdfNode=st.getObject();
 			subjects.add(sub);
 			rdfNodes.add(rdfNode);
-
 			System.out.println(" the subjects are "+rdfNode);
 
 		}
+		for(int i=0;i<subjects.size();i++)
+			m.removeAll(subjects.get(i), p3, rdfNodes.get(i));
 
-		m.remove(subjects.get(0), p3, rdfNodes.get(0));
-		m.remove(subjects.get(1), p3, rdfNodes.get(1));
-		m.remove(subjects.get(2), p3, rdfNodes.get(2));
-		m.remove(subjects.get(3), p3, rdfNodes.get(3));
 		return m;
 
 	}
 
 
-	public static void main(String[] args) throws IOException {
-
-		String inputtFile= "/home/abdullah/deer/NUT_DATA/DE_geometry_out.ttl";
-
-		Model model= Reader.readModel(inputtFile);
-
-		Model newModel= removePropertyProcess(model);
-
-		String outputFile= "/home/abdullah/deer/NUT_DATA/DE_geometry_out1.ttl";
-
-		Writer.writeModel(newModel, "TTL", outputFile);
-
-
-	}
+//	public static void main(String[] args) throws IOException {
+//
+//		String inputtFile= "/home/abddatascienceadmin/deer/NUT_DATA/out1234.ttl";
+//
+//		Model model= Reader.readModel(inputtFile);
+//
+//		Model newModel= removePropertyProcess(model);
+//
+//		String outputFile= "/home/abddatascienceadmin/deer/NUT_DATA/1out1234.ttl";
+//
+//		Writer.writeModel(newModel, "TTL", outputFile);
+//
+//
+//	}
 
 }

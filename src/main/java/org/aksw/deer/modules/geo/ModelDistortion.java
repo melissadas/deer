@@ -55,7 +55,6 @@ public class ModelDistortion {
 	 */
 	private Model modeldistor(Model input, int destortionSize,double degreeofMut) {
 
-
 		Model newModel= ModelFactory.createDefaultModel() ;
 		Model newModel2= ModelFactory.createDefaultModel() ;
 		Property street = ResourceFactory.createProperty("http://ex.org/a#street");
