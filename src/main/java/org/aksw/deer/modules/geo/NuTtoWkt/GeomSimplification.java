@@ -1,7 +1,5 @@
 package org.aksw.deer.modules.geo.NuTtoWkt;
 
-import java.util.ArrayList;
-
 import org.geotools.geometry.jts.JTSFactoryFinder;
 
 import com.vividsolutions.jts.geom.Geometry;
@@ -14,47 +12,28 @@ import com.vividsolutions.jts.simplify.TopologyPreservingSimplifier;
 public class GeomSimplification {
 
 
-	public static ArrayList<String> geomSimpilfication(ArrayList<String>strings, double distanceTolerance) throws ParseException{
-
-		ArrayList<String> simpilfiedGeom =new 	ArrayList<String>(); 
-		ArrayList<Geometry> pLs= new ArrayList<Geometry>();
-		ArrayList<Geometry> geom= new ArrayList<Geometry>();
+	public static String geomSimpilfication(String string, double distanceTolerance) throws ParseException{
 
 		GeometryFactory geometryFactory = JTSFactoryFinder.getGeometryFactory( null );
 		WKTReader reader = new WKTReader( geometryFactory );
+		Geometry pLtemp= (Polygon) reader.read(string);
+		System.out.println("Nrs of Polygon's Points before simpilfication= "+ pLtemp.getNumPoints());
+		Geometry geomTemp=	TopologyPreservingSimplifier.simplify(pLtemp,distanceTolerance);
+		System.out.println("Nrs of Polygon's Points after simpilfication= "+ geomTemp.getNumPoints());
+		String str= geomTemp.toString();
 
-
-		for(int i=0;i<strings.size();i++) {
-
-			Geometry pLtemp= (Polygon) reader.read(strings.get(i));
-			pLs.add(pLtemp);
-
-			Geometry geomTemp=	TopologyPreservingSimplifier.simplify(pLs.get(i),distanceTolerance);
-			geom.add(geomTemp);
-			String str=geom.get(i).toString();
-			simpilfiedGeom.add(str);
-		}
-
-		return simpilfiedGeom;
+		return str;
 	}
 
-	public static ArrayList<String> geomMean(ArrayList<String>strings) throws ParseException{
-
-		ArrayList<Geometry> pL= new ArrayList<Geometry>();
-		ArrayList<String> strs=new ArrayList<String>();
+	public static String geomMean(String string) throws ParseException{
 
 		GeometryFactory geometryFactory = JTSFactoryFinder.getGeometryFactory( null );
 		WKTReader reader = new WKTReader( geometryFactory );
+		Geometry pLtemp= (Polygon) reader.read(string);
 
-		for(int i=0;i<strings.size();i++) {
-
-			Geometry pLtemp= (Polygon) reader.read(strings.get(i));
-			pL.add(pLtemp);
-			String str=pL.get(i).getCentroid().toString();
-			strs.add(str);
-		}
-
-		return strs;
+		String str=pLtemp.getCentroid().toString();
+		System.out.println("the mean is "+str);
+		return str;
 	}
 
 

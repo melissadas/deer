@@ -20,11 +20,14 @@ import org.apache.jena.rdf.model.StmtIterator;
 import org.apache.jena.vocabulary.OWL;
 import org.apache.jena.vocabulary.RDF;
 
+import com.vividsolutions.jts.io.ParseException;
+
 
 
 public class RDFgeoPreProcessing {
 
 	private static String ngeo = "http://geovocab.org/geometry#";
+	//private static String geo="http://www.w3.org/2003/01/geo/wgs84_pos#";
 
 	public static ArrayList<String>allStringLat1=new ArrayList<String>();
 	public static ArrayList<String>allStringLong1=new ArrayList<String>();
@@ -32,71 +35,53 @@ public class RDFgeoPreProcessing {
 	static String string1;
 	static Resource subject;
 
-	public static Model processModel(Model m) throws FileNotFoundException
+	public static Model processModel(Model m) throws FileNotFoundException, ParseException
 	{
-		StmtIterator iter = m.listStatements();
+		Property createProperty = ResourceFactory.createProperty(ngeo, "posList");
+		StmtIterator iter = m.listStatements(null,createProperty,(RDFNode)null);
+
 		while(iter.hasNext())
+
+		{	Statement stmt = iter.nextStatement();
+		subject=stmt.getSubject();
+
+		//System.out.println("the subjects are "+subject);
+		List<Resource> out3 = explodeAnonymousResource(stmt.getObject().asResource());
+		for(int i=0; i<out3.size();i++)
 		{
-			Statement st = iter.next();
+			Iterator<Statement> it1 = m.listStatements(out3.get(i), null, (RDFNode)null);
 
-			if(st.getSubject().hasProperty(RDF.type, ResourceFactory.createResource(ngeo+"Polygon")))
+			while(it1.hasNext())
 			{
-				//System.out.println("Hello "+st.getObject()+" I am polygon member ring with values");
-				List<Resource> out = explodeAnonymousResource(st.getSubject());
-				StmtIterator polymemiter = m.listStatements(out.get(0)
-						,ResourceFactory.createProperty(ngeo, "exterior"),(RDFNode)null);
-				while(polymemiter.hasNext())
-				{
-
-					List<Resource> out2 = explodeAnonymousResource(polymemiter.next().getObject().asResource());
-					StmtIterator polymemiter1 = m.listStatements(out2.get(0)
-							,ResourceFactory.createProperty(ngeo, "posList"),(RDFNode)null);
-					//System.out.println("polymemiter1 is "+ polymemiter1.toString());
-
-					while(polymemiter1.hasNext())
-					{ 
-						Statement stm = polymemiter1.next();
-						subject= stm.getSubject();
-						List<Resource> out3 = explodeAnonymousResource(stm.getObject().asResource());
-
-						for(int i=0; i<out3.size();i++)
-
-						{ //System.out.println("i\n "+ i);
-							Iterator<Statement> it1 = m.listStatements(out3.get(i), null, (RDFNode)null);
-
-							while(it1.hasNext())
-							{
-								Statement pos = it1.next();
-
-								if(pos.getPredicate().toString().contains("lat"))
-
-								{  
-									allStringLat1.add(pos.getObject().toString());
-								}
-
-								else
-								{
-									allStringLong1.add(pos.getObject().toString());
-
-								}
-							}
-
-						}
+				Statement pos = it1.next();
 
 
-						string1=toWKT(allStringLong1,allStringLat1);
-						allStringLat1=new ArrayList<String>();
-						allStringLong1=new ArrayList<String>();
+				if(pos.getPredicate().toString().contains("lat"))
 
-					}
+				{  
+					//System.out.println("the object is "+pos.getObject().toString());
+					allStringLat1.add(pos.getObject().toString());
 
 				}
 
-				System.out.println("string is "+string1);
-				m.add(subject,ResourceFactory.createProperty(ngeo, "toWKT"),ResourceFactory.createStringLiteral(string1));
+
+				else
+				{
+					allStringLong1.add(pos.getObject().toString());
+
+				}
 
 			}
 
+		}
+
+		string1=toWKT(allStringLong1,allStringLat1);
+		//String str=GeomSimplification.geomMean(string1);
+		String str1=GeomSimplification.geomSimpilfication(string1, 1.9447);
+		allStringLat1=new ArrayList<String>();
+		allStringLong1=new ArrayList<String>();
+		System.out.println("string is "+string1);
+		m.add(subject,ResourceFactory.createProperty(ngeo, "toWKT"),ResourceFactory.createStringLiteral(str1));
 		}
 
 		System.out.println(" it works");
@@ -153,13 +138,13 @@ public class RDFgeoPreProcessing {
 	}
 
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException, ParseException {
 
 		String fileName = "/home/abddatascienceadmin/deer/NUT_DATA/nutsIn-91.ttl";
 		Model model= Reader.readModel(fileName);
 		Model newModel=processModel( model);
 
-		String outputFile= "/home/abddatascienceadmin/deer/NUT_DATA/out1234.ttl";
+		String outputFile= "/home/abddatascienceadmin/deer/NUT_DATA/N_4_1out1234.ttl";
 		Writer.writeModel(newModel, "TTL", outputFile);
 	}
 }

@@ -1,8 +1,11 @@
 package org.aksw.deer.modules.geo.NuTtoWkt;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import org.aksw.deer.io.Reader;
+import org.aksw.deer.io.Writer;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.RDFNode;
@@ -41,19 +44,19 @@ public class RmovePropertyProcess {
 	}
 
 
-//	public static void main(String[] args) throws IOException {
-//
-//		String inputtFile= "/home/abddatascienceadmin/deer/NUT_DATA/out1234.ttl";
-//
-//		Model model= Reader.readModel(inputtFile);
-//
-//		Model newModel= removePropertyProcess(model);
-//
-//		String outputFile= "/home/abddatascienceadmin/deer/NUT_DATA/1out1234.ttl";
-//
-//		Writer.writeModel(newModel, "TTL", outputFile);
-//
-//
-//	}
+	public static void main(String[] args) throws IOException {
+
+		String inputtFile= "/home/abddatascienceadmin/deer/NUT_DATA/N_4_1out1234.ttl";
+
+		Model model= Reader.readModel(inputtFile);
+
+		Model newModel= removePropertyProcess(model);
+
+		String outputFile= "/home/abddatascienceadmin/deer/NUT_DATA/N_4_2out1234.ttl";
+
+		Writer.writeModel(newModel, "TTL", outputFile);
+
+
+	}
 
 }
