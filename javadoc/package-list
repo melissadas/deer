@@ -3,6 +3,5 @@ org.aksw.deer.execution
 org.aksw.deer.io
 org.aksw.deer.learning
 org.aksw.deer.parameter
-org.aksw.deer.server
 org.aksw.deer.util
 org.aksw.deer.vocabulary
