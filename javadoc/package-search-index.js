@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"org.aksw.deer.enrichment"},{"l":"org.aksw.deer.execution"},{"l":"org.aksw.deer.io"},{"l":"org.aksw.deer.learning"},{"l":"org.aksw.deer.parameter"},{"l":"org.aksw.deer.util"},{"l":"org.aksw.deer.vocabulary"}]
