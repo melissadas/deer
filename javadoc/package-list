@@ -1,7 +1,6 @@
-org.aksw.deer.enrichment
-org.aksw.deer.execution
+org.aksw.deer
+org.aksw.deer.enrichments
 org.aksw.deer.io
 org.aksw.deer.learning
-org.aksw.deer.parameter
 org.aksw.deer.util
 org.aksw.deer.vocabulary
