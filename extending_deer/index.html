@@ -1,0 +1,354 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Extending DEER · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-theme-api/theme-api.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    
+    <link rel="prev" href="../configuring_deer/" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        <li class="header">Getting Started</li>
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    About this documentation
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../installation.html">
+            
+                <a href="../installation.html">
+            
+                    
+                    Installation and Setup
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Manual</li>
+        
+        
+    
+        <li class="chapter " data-level="2.1" data-path="../understanding_deer/">
+            
+                <a href="../understanding_deer/">
+            
+                    
+                    About DEER
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2" data-path="../configuring_deer/">
+            
+                <a href="../configuring_deer/">
+            
+                    
+                    Configuring DEER
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="2.3" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Extending DEER
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">References</li>
+        
+        
+    
+        <li class="chapter " data-level="3.1" >
+            
+                <a target="_blank" href="https://dice-group.github.io/deer/javadoc/index.html?overview-summary.html">
+            
+                    
+                    Javadoc
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.2" >
+            
+                <span>
+            
+                    
+                    Changelog
+            
+                </span>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >Extending DEER</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h2 id="extending-deer">Extending DEER</h2>
+<p>DEER is built on top of <a href="https://github.com/dice-group/faraday-cage" target="_blank">FARADAY-CAGE</a>, which uses the
+plugin system <a href="https://github.com/decebals/pf4j" target="_blank">PF4J</a>.<br>This is good news for developers willing to extend DEER with their custom enrichment operators,
+as you do not need to fork and mess with DEER source directly.
+Instead, you just need to follow a few guidelines and implement an easy interface to be ready to
+plug your <a href="../GLOSSARY.html#enrichment-operator" class="glossary-term" title="An operator which takes at least one dataset as input and returns at least one enriched version as output
+is called enrichment operator.
+We call enrichment operators that take and return exactly one dataset  normal enrichment operators, while
+those accepting or emitting many datasets are called  hub enrichment operators. ">enrichment operator</a> into DEER.  </p>
+<p>We define three base interfaces:</p>
+<ol>
+<li><code>org.aksw.deer.DeerPlugin</code> </li>
+<li><code>org.aksw.deer.ParametrizedDeerPlugin</code></li>
+<li><code>org.aksw.deer.learning.SelfConfigurator</code></li>
+</ol>
+<p>and four abstract classes:</p>
+<ol>
+<li><code>org.aksw.deer.enrichments.AbstractEnrichmentOperator</code></li>
+<li><code>org.aksw.deer.enrichments.AbstractParametrizedEnrichmentOperator</code></li>
+<li><code>org.aksw.deer.io.AbstractModelReader</code></li>
+<li><code>org.aksw.deer.io.AbstractModelWriter</code></li>
+</ol>
+<p>You should always extend the abstract classes and never need to implement the interfaces directly,
+but they could come in handy when trying to obtain instances programmatically using 
+<code>org.aksw.faraday-cage.PluginFactory</code>.</p>
+<p>For more information on how to extend these classes, please read the Javadoc.<br> <em>Note that javadoc documentation does currently not cover a lot of the code base. This will
+ be corrected for by the time we release version 1.0.0.</em> </p>
+<p>An example plugin using a parameterless enrichment
+operator can be found <a href="https://github.com/dice-group/deer/tree/master/examples/simple-plugin-example/" target="_blank">here</a>.</p>
+<h2 id="parametrization-of-plugins">Parametrization of Plugins</h2>
+<p>We are currently extending FARADAY-CAGE with a completely standardized method to parametrize nodes,
+including full automatic parameter subgraph validation and self-documentation.
+Until then, the API for parametrized enrichment operators is not considered final and therefore,
+we will not document it now.</p>
+<hr>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Extending DEER","level":"2.3","depth":1,"next":{"title":"Javadoc","level":"3.1","depth":1,"url":"https://dice-group.github.io/deer/javadoc/index.html?overview-summary.html","ref":"https://dice-group.github.io/deer/javadoc/index.html?overview-summary.html","articles":[]},"previous":{"title":"Configuring DEER","level":"2.2","depth":1,"path":"configuring_deer/index.md","ref":"./configuring_deer/index.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["theme-api"],"pluginsConfig":{"theme-api":{"languages":[{"lang":"java","name":"Java","default":true}],"split":true,"theme":"dark"},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"extending_deer/index.md","mtime":"2018-02-27T01:44:43.384Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-02-27T02:13:16.266Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-theme-api/theme-api.js"></script>
+        
+    
+
+    </body>
+</html>
+

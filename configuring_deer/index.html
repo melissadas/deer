@@ -1,0 +1,392 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Configuring DEER · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-theme-api/theme-api.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="../extending_deer/" />
+    
+    
+    <link rel="prev" href="../understanding_deer/" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        <li class="header">Getting Started</li>
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    About this documentation
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../installation.html">
+            
+                <a href="../installation.html">
+            
+                    
+                    Installation and Setup
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Manual</li>
+        
+        
+    
+        <li class="chapter " data-level="2.1" data-path="../understanding_deer/">
+            
+                <a href="../understanding_deer/">
+            
+                    
+                    About DEER
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="2.2" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Configuring DEER
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.3" data-path="../extending_deer/">
+            
+                <a href="../extending_deer/">
+            
+                    
+                    Extending DEER
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">References</li>
+        
+        
+    
+        <li class="chapter " data-level="3.1" >
+            
+                <a target="_blank" href="https://dice-group.github.io/deer/javadoc/index.html?overview-summary.html">
+            
+                    
+                    Javadoc
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.2" >
+            
+                <span>
+            
+                    
+                    Changelog
+            
+                </span>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >Configuring DEER</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="configuring-deer">Configuring DEER</h1>
+<p>DEER is configured using a simple RDF vocabulary.
+Its namespace is <code>http://deer.aksw.org/vocabulary/#</code>.</p>
+<p>There are just three predefined predicates that DEER inherits from FARADAY-CAGE:</p>
+<ul>
+<li><code>&lt;http://deer.aksw.org/vocabulary/#implementedIn&gt;</code></li>
+<li><code>&lt;http://deer.aksw.org/vocabulary/#hasInput&gt;</code></li>
+<li><code>&lt;http://deer.aksw.org/vocabulary/#hasOutput&gt;</code></li>
+</ul>
+<p>Plugins are associated with unique resources. The default plugins that ship with deer-core live in
+the deer namespace and have just their class name as local part, e.g.: </p>
+<ul>
+<li><code>&lt;http://deer.aksw.org/vocabulary/#DefaultModelReader&gt;</code></li>
+<li><code>&lt;http://deer.aksw.org/vocabulary/#DefaultModelWriter&gt;</code></li>
+<li><code>&lt;http://deer.aksw.org/vocabulary/#FilterEnrichmentOperator&gt;</code></li>
+</ul>
+<p>Custom plugins should be identified by resources outside of the default namespace to prevent
+naming collisions.</p>
+<p>Plugins define their own configuration vocabulary. In the final 1.0.0 release, it will be possible to
+get an accurate description of the available parameters of a given plugin using the CLI.</p>
+<p>The following example configuration demonstrates how the predefined vocabulary works:  </p>
+<pre><code class="lang-turtle">@prefix : &lt;http://deer.aksw.org/vocabulary/#&gt; .
+@prefix rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt; .
+@prefix geo: &lt;http://www.w3.org/2003/01/geo/wgs84_pos#&gt; .
+@prefix owl: &lt;http://www.w3.org/2002/07/owl#&gt; .
+
+:node_reader1
+              :implementedIn     :DefaultModelReader ;
+              :fromUri           &lt;http://dbpedia.org/resource/Paderborn&gt; ;
+              :useEndpoint       &lt;http://dbpedia.org/sparql&gt; ;
+              :outputFile        &quot;input_dbp.ttl&quot; ;
+              :outputFormat      &quot;Turtle&quot; ;
+              :hasOutput         ( :node_conf ) .
+:node_reader2
+              :implementedIn     :DefaultModelReader ;
+              :fromUri           &lt;http://dbpedia.org/resource/Paderborn&gt; ;
+              :useEndpoint       &lt;http://dbpedia.org/sparql&gt; ;
+              :outputFile        &quot;input_lgd.ttl&quot; ;
+              :outputFormat      &quot;Turtle&quot; ;
+              :hasOutput         ( :node_merge ) .
+:node_writer
+              :implementedIn     :DefaultModelWriter ;
+              :outputFile        &quot;output_demo.ttl&quot; ;
+              :outputFormat      &quot;Turtle&quot; ;
+              :hasInput          ( :node_filter ) .
+:node_merge
+              :implementedIn     :GeoFusionEnrichmentOperator ;
+              :hasInput          ( :node_conf :node_reader2 ) ;
+              :hasOutput         ( :node_filter ) ;
+              :fusionAction      &quot;takeAll&quot; ;
+              :mergeOtherStatements
+                                 &quot;true&quot; .
+:node_filter
+              :implementedIn     :FilterEnrichmentOperator ;
+              :hasInput          ( :node_merge ) ;
+              :hasOutput         ( :node_writer ) ;
+              :selectors         (
+                    [ :predicate geo:lat ]
+                    [ :predicate geo:long ]
+                    [ :predicate rdfs:label ]
+                    [ :predicate owl:sameAs ]
+              ) .
+:node_conf
+              :implementedIn     :AuthorityConformationEnrichmentOperator ;
+              :hasInput          ( :node_reader1 ) ;
+              :hasOutput         ( :node_merge ) ;
+              :sourceSubjectAuthority 
+                                 &quot;http://dbpedia.org&quot; ;
+              :targetSubjectAuthority 
+                                 &quot;http://deer.org&quot; .
+</code></pre>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Configuring DEER","level":"2.2","depth":1,"next":{"title":"Extending DEER","level":"2.3","depth":1,"path":"extending_deer/index.md","ref":"./extending_deer/index.md","articles":[]},"previous":{"title":"About DEER","level":"2.1","depth":1,"path":"understanding_deer/index.md","ref":"./understanding_deer/index.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["theme-api"],"pluginsConfig":{"theme-api":{"languages":[{"lang":"java","name":"Java","default":true}],"split":true,"theme":"dark"},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"configuring_deer/index.md","mtime":"2018-02-27T01:44:43.383Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-02-27T02:13:16.266Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-theme-api/theme-api.js"></script>
+        
+    
+
+    </body>
+</html>
+
