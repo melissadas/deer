@@ -273,33 +273,36 @@ get an accurate description of the available parameters of a given plugin using 
 
 :node_reader1
               :implementedIn     :DefaultModelReader ;
-              :fromUri           &lt;http://dbpedia.org/resource/Paderborn&gt; ;
-              :useEndpoint       &lt;http://dbpedia.org/sparql&gt; ;
-              :outputFile        &quot;input_dbp.ttl&quot; ;
-              :outputFormat      &quot;Turtle&quot; ;
+              :fromUri           &lt;http://de.dbpedia.org/resource/Paderborn&gt; ;
+              :useEndpoint       &lt;http://de.dbpedia.org/sparql&gt; ;
               :hasOutput         ( :node_conf ) .
+
 :node_reader2
               :implementedIn     :DefaultModelReader ;
               :fromUri           &lt;http://dbpedia.org/resource/Paderborn&gt; ;
               :useEndpoint       &lt;http://dbpedia.org/sparql&gt; ;
-              :outputFile        &quot;input_lgd.ttl&quot; ;
-              :outputFormat      &quot;Turtle&quot; ;
-              :hasOutput         ( :node_merge ) .
-:node_writer
-              :implementedIn     :DefaultModelWriter ;
-              :outputFile        &quot;output_demo.ttl&quot; ;
-              :outputFormat      &quot;Turtle&quot; ;
-              :hasInput          ( :node_filter ) .
-:node_merge
+              :hasOutput         ( :node_geofusion ) .
+
+:node_conf
+              :implementedIn     :AuthorityConformationEnrichmentOperator ;
+              :hasInput          ( :node_reader1 ) ;
+              :hasOutput         ( :node_geofusion ) ;
+              :sourceSubjectAuthority
+                                 &quot;http://dbpedia.org&quot; ;
+              :targetSubjectAuthority
+                                 &quot;http://deer.org&quot; .
+
+:node_geofusion
               :implementedIn     :GeoFusionEnrichmentOperator ;
               :hasInput          ( :node_conf :node_reader2 ) ;
               :hasOutput         ( :node_filter ) ;
               :fusionAction      &quot;takeAll&quot; ;
               :mergeOtherStatements
                                  &quot;true&quot; .
+
 :node_filter
               :implementedIn     :FilterEnrichmentOperator ;
-              :hasInput          ( :node_merge ) ;
+              :hasInput          ( :node_geofusion ) ;
               :hasOutput         ( :node_writer ) ;
               :selectors         (
                     [ :predicate geo:lat ]
@@ -307,14 +310,12 @@ get an accurate description of the available parameters of a given plugin using 
                     [ :predicate rdfs:label ]
                     [ :predicate owl:sameAs ]
               ) .
-:node_conf
-              :implementedIn     :AuthorityConformationEnrichmentOperator ;
-              :hasInput          ( :node_reader1 ) ;
-              :hasOutput         ( :node_merge ) ;
-              :sourceSubjectAuthority 
-                                 &quot;http://dbpedia.org&quot; ;
-              :targetSubjectAuthority 
-                                 &quot;http://deer.org&quot; .
+
+:node_writer
+              :implementedIn     :DefaultModelWriter ;
+              :outputFile        &quot;output_demo.ttl&quot; ;
+              :outputFormat      &quot;Turtle&quot; ;
+:hasInput ( :node_filter ) .
 </code></pre>
 
                                 
@@ -349,7 +350,7 @@ get an accurate description of the available parameters of a given plugin using 
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Configuring DEER","level":"2.2","depth":1,"next":{"title":"Extending DEER","level":"2.3","depth":1,"path":"extending_deer/index.md","ref":"./extending_deer/index.md","articles":[]},"previous":{"title":"About DEER","level":"2.1","depth":1,"path":"understanding_deer/index.md","ref":"./understanding_deer/index.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["theme-api"],"pluginsConfig":{"theme-api":{"languages":[{"lang":"java","name":"Java","default":true}],"split":true,"theme":"dark"},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"configuring_deer/index.md","mtime":"2018-03-05T19:17:49.984Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-03-05T19:24:09.049Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Configuring DEER","level":"2.2","depth":1,"next":{"title":"Extending DEER","level":"2.3","depth":1,"path":"extending_deer/index.md","ref":"./extending_deer/index.md","articles":[]},"previous":{"title":"About DEER","level":"2.1","depth":1,"path":"understanding_deer/index.md","ref":"./understanding_deer/index.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["theme-api"],"pluginsConfig":{"theme-api":{"languages":[{"lang":"java","name":"Java","default":true}],"split":true,"theme":"dark"},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"configuring_deer/index.md","mtime":"2018-03-06T12:12:25.881Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-03-06T12:18:31.672Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
