@@ -61,7 +61,7 @@
     <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="../extending_deer/" />
+    <link rel="next" href="enrichment_operators.html" />
     
     
     <link rel="prev" href="../understanding_deer/" />
@@ -154,7 +154,20 @@
             
         </li>
     
-        <li class="chapter " data-level="2.3" data-path="../extending_deer/">
+        <li class="chapter " data-level="2.3" data-path="enrichment_operators.html">
+            
+                <a href="enrichment_operators.html">
+            
+                    
+                    Predefined enrichment operators
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.4" data-path="../extending_deer/">
             
                 <a href="../extending_deer/">
             
@@ -254,7 +267,7 @@ Its namespace is <code>http://deer.aksw.org/vocabulary/#</code>.</p>
 <li><code>&lt;http://deer.aksw.org/vocabulary/#hasInput&gt;</code></li>
 <li><code>&lt;http://deer.aksw.org/vocabulary/#hasOutput&gt;</code></li>
 </ul>
-<p>Plugins are associated with unique resources. The default plugins that ship with deer-core live in
+<p>Plugins are associated with unique resources. The <a href="configuring_deer/enrichment_operators.md">default plugins</a> that ship with deer-core live in
 the deer namespace and have just their class name as local part, e.g.: </p>
 <ul>
 <li><code>&lt;http://deer.aksw.org/vocabulary/#DefaultModelReader&gt;</code></li>
@@ -263,8 +276,7 @@ the deer namespace and have just their class name as local part, e.g.: </p>
 </ul>
 <p>Custom plugins should be identified by resources outside of the default namespace to prevent
 naming collisions.</p>
-<p>Plugins define their own configuration vocabulary. In the final 1.0.0 release, it will be possible to
-get an accurate description of the available parameters of a given plugin using the CLI.</p>
+<p>Plugins define their own configuration vocabulary. <a href="configuring_deer/enrichment_operators.md">Here</a>, you would find an accurate description of the available parameters of all the predefined enrichment operators in the current release.</p>
 <p>The following example configuration demonstrates how the predefined vocabulary works:  </p>
 <pre><code class="lang-turtle">@prefix : &lt;http://deer.aksw.org/vocabulary/#&gt; .
 @prefix rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt; .
@@ -350,7 +362,7 @@ get an accurate description of the available parameters of a given plugin using 
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Configuring DEER","level":"2.2","depth":1,"next":{"title":"Extending DEER","level":"2.3","depth":1,"path":"extending_deer/index.md","ref":"./extending_deer/index.md","articles":[]},"previous":{"title":"About DEER","level":"2.1","depth":1,"path":"understanding_deer/index.md","ref":"./understanding_deer/index.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["theme-api"],"pluginsConfig":{"theme-api":{"languages":[{"lang":"java","name":"Java","default":true}],"split":true,"theme":"dark"},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"configuring_deer/index.md","mtime":"2018-03-12T11:00:57.026Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-03-12T11:05:42.463Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Configuring DEER","level":"2.2","depth":1,"next":{"title":"Predefined enrichment operators","level":"2.3","depth":1,"path":"configuring_deer/enrichment_operators.md","ref":"./configuring_deer/enrichment_operators.md","articles":[]},"previous":{"title":"About DEER","level":"2.1","depth":1,"path":"understanding_deer/index.md","ref":"./understanding_deer/index.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["theme-api"],"pluginsConfig":{"theme-api":{"languages":[{"lang":"java","name":"Java","default":true}],"split":true,"theme":"dark"},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"configuring_deer/index.md","mtime":"2018-03-12T11:14:06.948Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-03-12T11:20:53.766Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
