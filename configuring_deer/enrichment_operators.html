@@ -61,10 +61,10 @@
     <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="../extending_deer/" />
+    <link rel="next" href="enrichment_operators.html" />
     
     
-    <link rel="prev" href="./" />
+    <link rel="prev" href="io.html" />
     
 
     </head>
@@ -155,7 +155,20 @@
             <ul class="articles">
                 
     
-        <li class="chapter active" data-level="2.2.1" data-path="enrichment_operators.html">
+        <li class="chapter " data-level="2.2.1" data-path="io.html">
+            
+                <a href="io.html">
+            
+                    
+                    Predefined IO
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="2.2.2" data-path="enrichment_operators.html">
             
                 <a href="enrichment_operators.html">
             
@@ -165,6 +178,129 @@
                 </a>
             
 
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="2.2.2.1" data-path="enrichment_operators.html">
+            
+                <a href="enrichment_operators.html#filter">
+            
+                    
+                    Filter Enrichment Operator
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2.2.2" data-path="enrichment_operators.html">
+            
+                <a href="enrichment_operators.html#linking">
+            
+                    
+                    Linking Enrichment Operator
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2.2.3" data-path="enrichment_operators.html">
+            
+                <a href="enrichment_operators.html#deref">
+            
+                    
+                    Dereferencing Enrichment Operator
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2.2.4" data-path="enrichment_operators.html">
+            
+                <a href="enrichment_operators.html#ner">
+            
+                    
+                    NER Enrichment Operator
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2.2.5" data-path="enrichment_operators.html">
+            
+                <a href="enrichment_operators.html#clone">
+            
+                    
+                    Clone Enrichment Operator
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2.2.6" data-path="enrichment_operators.html">
+            
+                <a href="enrichment_operators.html#merge">
+            
+                    
+                    Merge Enrichment Operator
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2.2.7" data-path="enrichment_operators.html">
+            
+                <a href="enrichment_operators.html#geofusion">
+            
+                    
+                    GeoFusion Enrichment Operator
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2.2.8" data-path="enrichment_operators.html">
+            
+                <a href="enrichment_operators.html#aconf">
+            
+                    
+                    Authority Conformation Enrichment Operator
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2.2.9" data-path="enrichment_operators.html">
+            
+                <a href="enrichment_operators.html#pconf">
+            
+                    
+                    Predicate Conformation Enrichment Operator
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
             
         </li>
     
@@ -201,19 +337,6 @@
                     Javadoc
             
                 </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="3.2" >
-            
-                <span>
-            
-                    
-                    Changelog
-            
-                </span>
             
 
             
@@ -264,19 +387,10 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="enrichment-operator-common-parameters">Enrichment Operator Common Parameters</h1>
-<p>All our enrichment operators accept a set of one or more input dataset(s) and generate a set of one or more output dataset(s). For configure the input dataset(s) for an <a href="../GLOSSARY.html#enrichment-operator" class="glossary-term" title="An operator which takes at least one dataset as input and returns at least one enriched version as output
-is called enrichment operator.
-We call enrichment operators that take and return exactly one dataset  normal enrichment operators, while
-those accepting or emitting many datasets are called  hub enrichment operators. ">enrichment operator</a>, use the <code>:hasInput</code> parameter which accepts a list of enrichment nodes. Using the same method, use the <code>:hasOutput</code> for specifying the output dataset(s). Finally, we use the <code>:implementedIn</code> parameter for specifying the name of the Java class, which implement the current <a href="../GLOSSARY.html#enrichment-operator" class="glossary-term" title="An operator which takes at least one dataset as input and returns at least one enriched version as output
-is called enrichment operator.
-We call enrichment operators that take and return exactly one dataset  normal enrichment operators, while
-those accepting or emitting many datasets are called  hub enrichment operators. ">enrichment operator</a>. </p>
-<p>For an example, see the configuration of the filter <a href="../GLOSSARY.html#enrichment-operator" class="glossary-term" title="An operator which takes at least one dataset as input and returns at least one enriched version as output
-is called enrichment operator.
-We call enrichment operators that take and return exactly one dataset  normal enrichment operators, while
-those accepting or emitting many datasets are called  hub enrichment operators. ">enrichment operator</a> in the next section, where the <code>:node_geofusion</code> is used as a single input dataset and the <code>:node_writer</code> is used as the single output dataset.</p>
-<h1 id="filter-enrichment-operator">Filter Enrichment Operator</h1>
+                                <h1 id="predefined-enrichment-operators">Predefined Enrichment Operators</h1>
+<p>Here you will find a comprehensive list of the enrichment operators included in DEER, their degree bounds, parameters and modes of operation.
+If not specified otherwise, they need to have exactly one input and exactly one output dataset.</p>
+<h2 id="filter">Filter Enrichment Operator </h2>
 <p>The idea of the filter <a href="../GLOSSARY.html#enrichment-operator" class="glossary-term" title="An operator which takes at least one dataset as input and returns at least one enriched version as output
 is called enrichment operator.
 We call enrichment operators that take and return exactly one dataset  normal enrichment operators, while
@@ -307,16 +421,59 @@ those accepting or emitting many datasets are called  hub enrichment operators. 
                     [ :predicate owl:sameAs ]
               ) .
 </code></pre>
-<h1 id="linking-enrichment-operator">Linking Enrichment Operator</h1>
+<h2 id="linking">Linking Enrichment Operator </h2>
 <p>The idea of the linking <a href="../GLOSSARY.html#enrichment-operator" class="glossary-term" title="An operator which takes at least one dataset as input and returns at least one enriched version as output
 is called enrichment operator.
 We call enrichment operators that take and return exactly one dataset  normal enrichment operators, while
 those accepting or emitting many datasets are called  hub enrichment operators. ">enrichment operator</a> is to enrich models with links discovered using LIMES. 
-In addition to the common parameters, the linking enrchment operator accepts the two more parameters of:</p>
-<ul>
+It can be used in two modes:</p>
+<ol>
+<li>enriching a dataset with links from an external linking process (1 input, 1-2 outputs)  <ul>
+<li>This mode will be selected if the linking <a href="../GLOSSARY.html#enrichment-operator" class="glossary-term" title="An operator which takes at least one dataset as input and returns at least one enriched version as output
+is called enrichment operator.
+We call enrichment operators that take and return exactly one dataset  normal enrichment operators, while
+those accepting or emitting many datasets are called  hub enrichment operators. ">enrichment operator</a> node has exactly one input dataset.  </li>
+<li>If it has exactly one output dataset, it will be the original input dataset enriched with the links.  </li>
+<li>If it has exactly two output datasets, the first will be just the original input dataset and the second will be a dataset of just the generated links.</li>
+<li>In this mode, the following parameters are accepted:<ul>
 <li><code>:specFile</code> which is a path for LIMES specification file</li>
-<li><code>:linksPart</code> which is determine which of the &quot;source&quot; or &quot;target&quot; dataset to be enriched, i.e. which dataset to be the source of the discovered links</li>
+<li><code>:linksPart</code> one of <code>&quot;source&quot;</code>, <code>&quot;target&quot;</code>. If <code>&quot;source&quot;</code> is selected <em>(default)</em>, nothing happens. If <code>&quot;target&quot;</code> is selected, we swap subjects and objects in the generated links. </li>
+<li><code>:selectMode</code> determines the strategy for selecting which links to keep from the original full limes mapping<ul>
+<li><code>&quot;all&quot;</code> <em>(default)</em> all links are kept </li>
+<li><code>&quot;best1toN&quot;</code> enforces 1-to-N mapping. For each target resource, only keep the best link to the source. </li>
+<li><code>&quot;best1to1&quot;</code> enforces 1-to-1 mapping. No resource in either target or source dataset will appear in more than one link.</li>
+<li><code>&quot;best&quot;</code> keep just the best link. If there are ties, it is unspecified which will be selected.</li>
 </ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>enriching a dataset with links from an internal linking process (2 inputs, 1-3 outputs)<ul>
+<li>This mode will be selected if the linking <a href="../GLOSSARY.html#enrichment-operator" class="glossary-term" title="An operator which takes at least one dataset as input and returns at least one enriched version as output
+is called enrichment operator.
+We call enrichment operators that take and return exactly one dataset  normal enrichment operators, while
+those accepting or emitting many datasets are called  hub enrichment operators. ">enrichment operator</a> node has exactly two input datasets.  </li>
+<li>If it has exactly one output dataset, it will be the result of merging the two input datasets and the generated links  </li>
+<li>If it has exactly two output datasets, they will correspond to the two input datasets in order and depending on the parameter <code>:linksPart</code>, either the first or the second will be enriched with the generated links.</li>
+<li>If it has exactly three output datasets, they will correspond to the two input datasets in order and the third one will be a dataset of just the generated links.</li>
+<li>In this mode, the following parameters are accepted:<ul>
+<li><code>:linksPart</code> one of <code>&quot;source&quot;</code>, <code>&quot;target&quot;</code>. If <code>&quot;source&quot;</code> is selected <em>(default)</em>, nothing happens. If <code>&quot;target&quot;</code> is selected, we swap subjects and objects in the generated links.<br>Moreover, if the number of output datasets is exactly two, this parameter will decide which of the two datasets will be enriched with the generated links. If it is &quot;source&quot; it will be the first, if it is &quot;target&quot; it will be the second.      </li>
+<li><code>:selectMode</code> determines the strategy for selecting which links to keep from the original full limes mapping<ul>
+<li><code>&quot;all&quot;</code> <em>(default)</em> all links are kept </li>
+<li><code>&quot;best1toN&quot;</code> enforces 1-to-N mapping. For each target resource, only keep the best link to the source. </li>
+<li><code>&quot;best1to1&quot;</code> enforces 1-to-1 mapping. No resource in either target or source dataset will appear in more than one link.</li>
+<li><code>&quot;best&quot;</code> keep just the best link. If there are ties, it is unspecified which will be selected.</li>
+</ul>
+</li>
+<li><code>:linkSpecification</code> the link specification to execute (as string literal)</li>
+<li><code>:linkingPredicate</code> the predicate with which links will be built</li>
+<li><code>:threshold</code> the similarity threshold. All links in the resulted mapping will have a similarity value greater than or equal to the threshold. </li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
 <p>In the following example, the linking <a href="../GLOSSARY.html#enrichment-operator" class="glossary-term" title="An operator which takes at least one dataset as input and returns at least one enriched version as output
 is called enrichment operator.
 We call enrichment operators that take and return exactly one dataset  normal enrichment operators, while
@@ -330,7 +487,7 @@ those accepting or emitting many datasets are called  hub enrichment operators. 
               :specFile          &quot;limes_specs.xml&quot; ;
               :linksPart         &quot;source&quot; .
 </code></pre>
-<h1 id="dereferencing-enrichment-operator">Dereferencing Enrichment Operator</h1>
+<h2 id="deref">Dereferencing Enrichment Operator </h2>
 <p>For datasets which contain similarity properties links (e.g. <code>owl:sameAs</code>), the idea dereferencing <a href="../GLOSSARY.html#enrichment-operator" class="glossary-term" title="An operator which takes at least one dataset as input and returns at least one enriched version as output
 is called enrichment operator.
 We call enrichment operators that take and return exactly one dataset  normal enrichment operators, while
@@ -358,7 +515,7 @@ those accepting or emitting many datasets are called  hub enrichment operators. 
                       :importProperty dcterms:description ]
               ) .
 </code></pre>
-<h1 id="ner-enrichment-operator">NER Enrichment Operator</h1>
+<h2 id="ner">NER Enrichment Operator </h2>
 <p>The enrichment information hidden in datatype properties is retrieved by using Named Entity Recognition (NER) <a href="../GLOSSARY.html#enrichment-operator" class="glossary-term" title="An operator which takes at least one dataset as input and returns at least one enriched version as output
 is called enrichment operator.
 We call enrichment operators that take and return exactly one dataset  normal enrichment operators, while
@@ -368,7 +525,7 @@ In the current version of DEER, we rely on the FOX framework. In the following, 
 - `:importProperty` Property added to be added into the input dataset.
 - `:neType` Force FOX to look for a specific NE&#x2019;s types only. Available types are: `:location` (default value), `:person:`, `:organization`, and `:all` to retrieve the all the previous three types.
 - `:askEndpoint` Ask the DBpedia endpoint for each location returned by FOX (setting it generates slower execution time but more accurate results). By default this parameter is set to false.
-</code></pre><h1 id="clone-enrichment-operator">Clone Enrichment Operator</h1>
+</code></pre><h2 id="clone">Clone Enrichment Operator </h2>
 <p>The idea behind the clone operator is to enable parallel enrichment of multiple copies of the same dataset. The clone operator takes one dataset as input and produces n &#x2265; 2 output datasets, which are all identical to the input dataset. </p>
 <p>In the following example, the clone operator is used to make 2 copies of the input dataset from <code>:node_1</code> into <code>:node_1_clone_1</code> and <code>:node_1_clone_2</code></p>
 <pre><code class="lang-turtle">@prefix : &lt;http://deer.aksw.org/vocabulary/#&gt; .
@@ -378,7 +535,7 @@ In the current version of DEER, we rely on the FOX framework. In the following, 
               :hasInput          ( :node_in ) ;
               :hasOutput         ( :node_in_clone_1  :node_in_clone_2) .
 </code></pre>
-<h1 id="merge-enrichment-operator">Merge Enrichment Operator</h1>
+<h2 id="merge">Merge Enrichment Operator </h2>
 <p>The idea behind the merge operator is to enable combining datasets. The merge operator takes a set of n &#x2265; 2 input datasets and merges them into one output dataset containing all the input datasets&#x2019; triples. </p>
 <p>In the following example, the merge operator is used to combine the 2 input datasets of <code>:node_1</code> and <code>:node_2</code> into <code>:node_3</code></p>
 <pre><code class="lang-turtle">@prefix : &lt;http://deer.aksw.org/vocabulary/#&gt; .
@@ -388,7 +545,7 @@ In the current version of DEER, we rely on the FOX framework. In the following, 
               :hasInput          ( :node_in_1 :node_in_2) ;
               :hasOutput         ( :node_out) .
 </code></pre>
-<h1 id="geofusion-enrichment-operator">GeoFusion Enrichment Operator</h1>
+<h2 id="geofusion">GeoFusion Enrichment Operator </h2>
 <p>The idea of the geo-fusion <a href="../GLOSSARY.html#enrichment-operator" class="glossary-term" title="An operator which takes at least one dataset as input and returns at least one enriched version as output
 is called enrichment operator.
 We call enrichment operators that take and return exactly one dataset  normal enrichment operators, while
@@ -398,7 +555,7 @@ In addtion to the common parameters, the geo-fusion operator have the following 
 <li>The <code>:fusionAction</code> is used to specify the how to fuse geo-spatial properties (by default the <code>geo:lat</code> and <code>geo:long</code>), the available fusion actions are:<ul>
 <li>&quot;takeA&quot; always use geometry from first dataset</li>
 <li>&quot;takeB&quot; always use geometry from second dataset</li>
-<li>&quot;takeAll&quot; merge all geometries&lt;/li&gt;</li>
+<li>&quot;takeAll&quot; merge all geometries</li>
 <li>&quot;takeMostDetailed&quot; use most detailed geometry from any model, e.g., in terms of lexical length of latitude and longitude values<ul>
 <li>The <code>:mergeOtherStatements</code> parameter is used to enable the merge of all other non geo-spacial properties from all input dataset to the output dataset</li>
 </ul>
@@ -419,7 +576,7 @@ In addtion to the common parameters, the geo-fusion operator have the following 
               :mergeOtherStatements
                                  &quot;true&quot; .
 </code></pre>
-<h1 id="authority-conformation-enrichment-operator">Authority Conformation Enrichment Operator</h1>
+<h2 id="aconf">Authority Conformation Enrichment Operator </h2>
 <p>The idea of the authority conformation operator is to change a specified source URI authority to a specified target URI authority. In addition to the common parameters, the authority conformation <a href="../GLOSSARY.html#enrichment-operator" class="glossary-term" title="An operator which takes at least one dataset as input and returns at least one enriched version as output
 is called enrichment operator.
 We call enrichment operators that take and return exactly one dataset  normal enrichment operators, while
@@ -436,7 +593,7 @@ those accepting or emitting many datasets are called  hub enrichment operators. 
               :targetSubjectAuthority
                                  &quot;http://deer.org&quot; .
 </code></pre>
-<h1 id="predicate-conformation-enrichment-operator">Predicate Conformation Enrichment Operator</h1>
+<h2 id="pconf">Predicate Conformation Enrichment Operator </h2>
 <p>The idea of the predicate conformation operator is to replace all instances of specified source property to a specified target predicated with the same object and subject values. In addition to the common parameters, the predicate conformation <a href="../GLOSSARY.html#enrichment-operator" class="glossary-term" title="An operator which takes at least one dataset as input and returns at least one enriched version as output
 is called enrichment operator.
 We call enrichment operators that take and return exactly one dataset  normal enrichment operators, while
@@ -457,6 +614,27 @@ those accepting or emitting many datasets are called  hub enrichment operators. 
                     [ :source rdf:label ]
                     [ :target skos:prefLabel ]
               ) .
+</code></pre>
+<h2 id="geodistance">GeoDistance Enrichment Operator </h2>
+<p>The idea of the geo-distance operator is to enrich resources that are connected via
+some predicate (configured with parameter <code>:selectPredicate</code>) with the distance between
+their respective geo coordinates.
+The distance in kilometers will be added as a string literal to the subject via the predicate specified
+in parameter <code>:distancePredicate</code>. </p>
+<p>In the following example, we use the geo-distance <a href="../GLOSSARY.html#enrichment-operator" class="glossary-term" title="An operator which takes at least one dataset as input and returns at least one enriched version as output
+is called enrichment operator.
+We call enrichment operators that take and return exactly one dataset  normal enrichment operators, while
+those accepting or emitting many datasets are called  hub enrichment operators. ">enrichment operator</a> to enrich cities from DBPedia
+with the distance to their western adjacent cities. </p>
+<pre><code class="lang-turtle">@prefix : &lt;http://deer.aksw.org/vocabulary/#&gt; .
+@prefix dbp : &lt;http://dbpedia.org/property/&gt; .
+
+:node_geodistance
+              :implementedIn     :GeoDistanceEnrichmentOperator ;
+              :hasInput          ( :node_in ) ;
+              :hasOutput         ( :node_out ) ;
+              :selectPredicate   dbp:west ; 
+              :distancePredicate :distanceToNextCityInTheWest .
 </code></pre>
 
                                 
@@ -491,7 +669,7 @@ those accepting or emitting many datasets are called  hub enrichment operators. 
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Predefined Enrichment Operators","level":"2.2.1","depth":2,"next":{"title":"Extending DEER","level":"2.3","depth":1,"path":"extending_deer/index.md","ref":"./extending_deer/index.md","articles":[]},"previous":{"title":"Configuring DEER","level":"2.2","depth":1,"path":"configuring_deer/index.md","ref":"./configuring_deer/index.md","articles":[{"title":"Predefined Enrichment Operators","level":"2.2.1","depth":2,"path":"configuring_deer/enrichment_operators.md","ref":"./configuring_deer/enrichment_operators.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["theme-api"],"pluginsConfig":{"theme-api":{"languages":[{"lang":"java","name":"Java","default":true}],"split":true,"theme":"dark"},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"configuring_deer/enrichment_operators.md","mtime":"2018-05-16T20:05:07.159Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-05-16T20:09:37.733Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Predefined Enrichment Operators","level":"2.2.2","depth":2,"next":{"title":"Filter Enrichment Operator","level":"2.2.2.1","depth":3,"anchor":"#filter","path":"configuring_deer/enrichment_operators.md","ref":"./configuring_deer/enrichment_operators.md#filter","articles":[]},"previous":{"title":"Predefined IO","level":"2.2.1","depth":2,"path":"configuring_deer/io.md","ref":"./configuring_deer/io.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["theme-api"],"pluginsConfig":{"theme-api":{"languages":[{"lang":"java","name":"Java","default":true}],"split":true,"theme":"dark"},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"configuring_deer/enrichment_operators.md","mtime":"2018-06-13T12:16:42.015Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-06-13T12:22:04.027Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

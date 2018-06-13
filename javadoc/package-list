@@ -2,5 +2,7 @@ org.aksw.deer
 org.aksw.deer.enrichments
 org.aksw.deer.io
 org.aksw.deer.learning
+org.aksw.deer.logging
+org.aksw.deer.server
 org.aksw.deer.util
 org.aksw.deer.vocabulary

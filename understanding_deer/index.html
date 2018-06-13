@@ -155,7 +155,20 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="2.2.1" data-path="../configuring_deer/enrichment_operators.html">
+        <li class="chapter " data-level="2.2.1" data-path="../configuring_deer/io.html">
+            
+                <a href="../configuring_deer/io.html">
+            
+                    
+                    Predefined IO
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2.2" data-path="../configuring_deer/enrichment_operators.html">
             
                 <a href="../configuring_deer/enrichment_operators.html">
             
@@ -165,6 +178,129 @@
                 </a>
             
 
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="2.2.2.1" data-path="../configuring_deer/enrichment_operators.html">
+            
+                <a href="../configuring_deer/enrichment_operators.html#filter">
+            
+                    
+                    Filter Enrichment Operator
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2.2.2" data-path="../configuring_deer/enrichment_operators.html">
+            
+                <a href="../configuring_deer/enrichment_operators.html#linking">
+            
+                    
+                    Linking Enrichment Operator
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2.2.3" data-path="../configuring_deer/enrichment_operators.html">
+            
+                <a href="../configuring_deer/enrichment_operators.html#deref">
+            
+                    
+                    Dereferencing Enrichment Operator
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2.2.4" data-path="../configuring_deer/enrichment_operators.html">
+            
+                <a href="../configuring_deer/enrichment_operators.html#ner">
+            
+                    
+                    NER Enrichment Operator
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2.2.5" data-path="../configuring_deer/enrichment_operators.html">
+            
+                <a href="../configuring_deer/enrichment_operators.html#clone">
+            
+                    
+                    Clone Enrichment Operator
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2.2.6" data-path="../configuring_deer/enrichment_operators.html">
+            
+                <a href="../configuring_deer/enrichment_operators.html#merge">
+            
+                    
+                    Merge Enrichment Operator
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2.2.7" data-path="../configuring_deer/enrichment_operators.html">
+            
+                <a href="../configuring_deer/enrichment_operators.html#geofusion">
+            
+                    
+                    GeoFusion Enrichment Operator
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2.2.8" data-path="../configuring_deer/enrichment_operators.html">
+            
+                <a href="../configuring_deer/enrichment_operators.html#aconf">
+            
+                    
+                    Authority Conformation Enrichment Operator
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2.2.9" data-path="../configuring_deer/enrichment_operators.html">
+            
+                <a href="../configuring_deer/enrichment_operators.html#pconf">
+            
+                    
+                    Predicate Conformation Enrichment Operator
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
             
         </li>
     
@@ -201,19 +337,6 @@
                     Javadoc
             
                 </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="3.2" >
-            
-                <span>
-            
-                    
-                    Changelog
-            
-                </span>
             
 
             
@@ -281,15 +404,25 @@ The first is a library that implements a domain model for dataset enrichment on 
 while the latter provides a CLI that can either run a single configuration or spawn a server to 
 submit tasks over a RESTful API. In a future release, the API will be accompanied by a web app
 to build configurations graphically in the browser.</p>
-<h2 id="plugin-types">Plugin Types</h2>
+<h2 id="deer-plugin-characteristics">DEER Plugin characteristics</h2>
+<p>All DEER plugins implement the <code>Node</code> interface from <strong>FARADAY-CAGE</strong>.
+As such, they have so called <strong>degree bounds</strong>, which restrict the number of datasets they can accept and emit.
+Degree bounds are notated as <code>(minIn, maxIn, minOut, maxOut)</code>, where</p>
+<ul>
+<li>minIn is the minimum number of accepted datasets</li>
+<li>maxIn is the maximum number of accepted datasets</li>
+<li>minIn is the minimum number of emitted datasets</li>
+<li>maxIn is the maximum number of emitted datasets</li>
+</ul>
+<h2 id="deer-plugin-types">DEER Plugin Types</h2>
 <p>DEERs domain model specifies three basic plugin types:</p>
 <ul>
-<li>A <strong>ModelReader</strong> is the only plugin that can be a root node in the execution graph and likewise it
+<li>A <strong>ModelReader</strong> <code>(0,0,1,1)</code> is the only plugin that can be a root node in the execution graph and likewise it
 must be a root node. It is responsible for reading one RDF dataset from a dedicated source to feed it into 
 the exxecution graph.  </li>
-<li>A <strong>ModelWriter</strong> can be an intermediary or a leaf node and it will write one RDF dataset to an external channel,
+<li>A <strong>ModelWriter</strong> <code>(1,1,0,1)</code> can be an intermediary or a leaf node and it will write one RDF dataset to an external channel,
 e.g. a file or a triplestore.  </li>
-<li>An <strong>EnrichmentOperator</strong> is an intermediary node that takes one or more RDF datasets as input,
+<li>An <strong>EnrichmentOperator</strong> <code>(1,N,1,M)</code> is an intermediary node that takes one or more RDF datasets as input,
 executes arbitrary transformations on them and outputs the result as one or more RDF datasets.</li>
 </ul>
 
@@ -325,7 +458,7 @@ executes arbitrary transformations on them and outputs the result as one or more
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"About DEER","level":"2.1","depth":1,"next":{"title":"Configuring DEER","level":"2.2","depth":1,"path":"configuring_deer/index.md","ref":"./configuring_deer/index.md","articles":[{"title":"Predefined Enrichment Operators","level":"2.2.1","depth":2,"path":"configuring_deer/enrichment_operators.md","ref":"./configuring_deer/enrichment_operators.md","articles":[]}]},"previous":{"title":"Installation and Setup","level":"1.2","depth":1,"path":"installation.md","ref":"./installation.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["theme-api"],"pluginsConfig":{"theme-api":{"languages":[{"lang":"java","name":"Java","default":true}],"split":true,"theme":"dark"},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"understanding_deer/index.md","mtime":"2018-05-16T20:05:07.159Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-05-16T20:09:37.733Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"About DEER","level":"2.1","depth":1,"next":{"title":"Configuring DEER","level":"2.2","depth":1,"path":"configuring_deer/index.md","ref":"./configuring_deer/index.md","articles":[{"title":"Predefined IO","level":"2.2.1","depth":2,"path":"configuring_deer/io.md","ref":"./configuring_deer/io.md","articles":[]},{"title":"Predefined Enrichment Operators","level":"2.2.2","depth":2,"path":"configuring_deer/enrichment_operators.md","ref":"./configuring_deer/enrichment_operators.md","articles":[{"title":"Filter Enrichment Operator","level":"2.2.2.1","depth":3,"anchor":"#filter","path":"configuring_deer/enrichment_operators.md","ref":"./configuring_deer/enrichment_operators.md#filter","articles":[]},{"title":"Linking Enrichment Operator","level":"2.2.2.2","depth":3,"anchor":"#linking","path":"configuring_deer/enrichment_operators.md","ref":"./configuring_deer/enrichment_operators.md#linking","articles":[]},{"title":"Dereferencing Enrichment Operator","level":"2.2.2.3","depth":3,"anchor":"#deref","path":"configuring_deer/enrichment_operators.md","ref":"./configuring_deer/enrichment_operators.md#deref","articles":[]},{"title":"NER Enrichment Operator","level":"2.2.2.4","depth":3,"anchor":"#ner","path":"configuring_deer/enrichment_operators.md","ref":"./configuring_deer/enrichment_operators.md#ner","articles":[]},{"title":"Clone Enrichment Operator","level":"2.2.2.5","depth":3,"anchor":"#clone","path":"configuring_deer/enrichment_operators.md","ref":"./configuring_deer/enrichment_operators.md#clone","articles":[]},{"title":"Merge Enrichment Operator","level":"2.2.2.6","depth":3,"anchor":"#merge","path":"configuring_deer/enrichment_operators.md","ref":"./configuring_deer/enrichment_operators.md#merge","articles":[]},{"title":"GeoFusion Enrichment Operator","level":"2.2.2.7","depth":3,"anchor":"#geofusion","path":"configuring_deer/enrichment_operators.md","ref":"./configuring_deer/enrichment_operators.md#geofusion","articles":[]},{"title":"Authority Conformation Enrichment Operator","level":"2.2.2.8","depth":3,"anchor":"#aconf","path":"configuring_deer/enrichment_operators.md","ref":"./configuring_deer/enrichment_operators.md#aconf","articles":[]},{"title":"Predicate Conformation Enrichment Operator","level":"2.2.2.9","depth":3,"anchor":"#pconf","path":"configuring_deer/enrichment_operators.md","ref":"./configuring_deer/enrichment_operators.md#pconf","articles":[]}]}]},"previous":{"title":"Installation and Setup","level":"1.2","depth":1,"path":"installation.md","ref":"./installation.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["theme-api"],"pluginsConfig":{"theme-api":{"languages":[{"lang":"java","name":"Java","default":true}],"split":true,"theme":"dark"},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"understanding_deer/index.md","mtime":"2018-06-13T12:16:42.015Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-06-13T12:22:04.027Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
