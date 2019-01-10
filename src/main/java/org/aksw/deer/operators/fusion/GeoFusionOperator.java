@@ -2,8 +2,10 @@ package org.aksw.deer.operators.fusion;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.aksw.deer.operators.DeerOperator;
+import org.apache.jena.ext.com.google.common.collect.Sets;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.NodeIterator;
@@ -95,11 +97,12 @@ public class GeoFusionOperator implements DeerOperator {
 	 */
 	@Override
 	public List<Model> process(List<Model> models, Map<String, String> parameters) {
-		logger.info("Invoking GeoFusionOperator of {} models with parameters {}", models.size(), parameters);
+		logger.debug("Invoking GeoFusionOperator of {} models with parameters {}", models.size(), parameters);
 
+		long start = System.currentTimeMillis();
 		try {
-			logger.info(" Model A: {}", models.get(0));
-			logger.info(" Model B: {}", models.get(1));
+			// logger.info(" Model A: {}", models.get(0));
+			// logger.info(" Model B: {}", models.get(1));
 		} catch (Exception e) {
 			logger.error("GeoFusionOperator expected two models, failed:", e);
 			return Lists.newArrayList();
@@ -107,11 +110,13 @@ public class GeoFusionOperator implements DeerOperator {
 
 		GeoFusionAction action = GeoFusionAction.valueOf(parameters.get(FUSION_ACTION_PARAM));
 		boolean mergeOtherStatements = Boolean.valueOf(parameters.getOrDefault(MERGE_OTHER_STATEMENTS_PARAM, "true"));
-		
-		// TODO get rid of this quick fix: if there's no sameAs in model A, swap them ;-)
-		// won't be necessary with new DEER configs supporting lists of datasets/parameters
+
+		// TODO get rid of this quick fix: if there's no sameAs in model A, swap
+		// them ;-)
+		// won't be necessary with new DEER configs supporting lists of
+		// datasets/parameters
 		if (!models.get(0).contains(null, OWL.sameAs)) {
-			logger.info("No owl:sameAs statements detected in first model, attempting to swap model A and model B");
+			logger.debug("No owl:sameAs statements detected in first model, attempting to swap model A and model B");
 			Model temp = models.get(1);
 			models.set(1, models.get(0));
 			models.set(0, temp);
@@ -120,8 +125,11 @@ public class GeoFusionOperator implements DeerOperator {
 		// Fuse geometries
 		Model targetModel = ModelFactory.createDefaultModel();
 		List<Resource> visitedResources = Lists.newArrayList();
+		logger.trace("{} before sameAs lookup", System.currentTimeMillis() - start);
 		Map<Resource, List<Resource>> sameAsLookupTable = getSameAsResources(models.get(0));
+		logger.trace("{} before list subjects", System.currentTimeMillis() - start);
 		ResIterator subjects = models.get(0).listSubjects();
+		logger.trace("{} before processings subjects", System.currentTimeMillis() - start);
 		while (subjects.hasNext()) {
 			Resource subject = subjects.next();
 			List<Resource> sameAsResources = sameAsLookupTable.get(subject);
@@ -135,9 +143,12 @@ public class GeoFusionOperator implements DeerOperator {
 			visitedResources.addAll(sameAsResources);
 		}
 
+		logger.trace("{} before adding non-visited resources", System.currentTimeMillis() - start);
 		addNonVisitedResources(models.get(1), targetModel, visitedResources, mergeOtherStatements);
 
-		logger.info("Target model returned by GeoFusionOperator: {}", targetModel);
+		// logger.info("Target model returned by GeoFusionOperator: {}",
+		// targetModel);
+		logger.info("GeoFusion processing took {}ms", System.currentTimeMillis() - start);
 
 		return Lists.newArrayList(targetModel);
 	}
@@ -147,7 +158,7 @@ public class GeoFusionOperator implements DeerOperator {
 			Model targetModel) {
 		CandidateGeometry selectedCandidateGeometry = selectCandidateGeometry(model, candidateGeometries, subject,
 				action);
-		logger.info("Selected candidate geometry: {}", selectedCandidateGeometry);
+		logger.trace("Selected candidate geometry: {}", selectedCandidateGeometry);
 		// if not all geometries are taken, compute dropped geometries
 		Model droppedGeometries = action.equals(GeoFusionAction.takeAll) ? ModelFactory.createDefaultModel()
 				: getDroppedGeometries(candidateGeometries, selectedCandidateGeometry);
@@ -187,8 +198,10 @@ public class GeoFusionOperator implements DeerOperator {
 	private void addNonVisitedResources(Model model2, Model targetModel, List<Resource> visitedResources,
 			boolean mergeOtherStatements) {
 		// add non-visited resources
-		List<Resource> nonVisitedSubjects = model2.listSubjects().toList();
-		nonVisitedSubjects.removeAll(visitedResources);
+		long start = System.currentTimeMillis();
+		Set<Resource> nonVisitedSubjects = model2.listSubjects().toSet();
+		nonVisitedSubjects.removeAll(Sets.newHashSet(visitedResources));
+		logger.trace("{} after computing non-visited subjects", System.currentTimeMillis() - start);
 		for (Resource nonVisitedSubject : nonVisitedSubjects) {
 			if (mergeOtherStatements) {
 				targetModel.add(model2.listStatements(nonVisitedSubject, null, (RDFNode) null));
@@ -198,6 +211,9 @@ public class GeoFusionOperator implements DeerOperator {
 				targetModel.add(geometryModel);
 			}
 		}
+		logger.trace("{} after old approach to add non-visited statements to target model",
+				System.currentTimeMillis() - start);
+
 	}
 
 	private CandidateGeometry selectCandidateGeometry(Model model, List<CandidateGeometry> candidateGeometries,
@@ -311,7 +327,7 @@ public class GeoFusionOperator implements DeerOperator {
 		}
 		return sameAsResources;
 	}
-	
+
 	private Map<Resource, List<Resource>> getSameAsResources(Model sourceA) {
 		List<Statement> sameAsStatements = sourceA.listStatements(null, OWL.sameAs, (RDFNode) null).toList();
 		Map<Resource, List<Resource>> sameAsResources = Maps.newHashMap();
@@ -320,8 +336,7 @@ public class GeoFusionOperator implements DeerOperator {
 				List<Resource> sameAsListForSubject = sameAsResources.get(stmt.getSubject());
 				if (sameAsListForSubject == null) {
 					sameAsResources.put(stmt.getSubject(), Lists.newArrayList(stmt.getObject().asResource()));
-				}
-				else {
+				} else {
 					sameAsListForSubject.add(stmt.getObject().asResource());
 				}
 			}
