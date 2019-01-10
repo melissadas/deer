@@ -1,6 +1,7 @@
 package org.aksw.deer.enrichments;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import org.aksw.faraday_cage.parameter.Parameter;
 import org.aksw.faraday_cage.parameter.ParameterImpl;
 import org.aksw.faraday_cage.parameter.ParameterMap;
@@ -22,6 +23,7 @@ import org.slf4j.LoggerFactory;
 import org.pf4j.Extension;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * Basic implementation of a fusion operator for geospatial properties.
@@ -211,8 +213,8 @@ public class GeoFusionEnrichmentOperator extends AbstractParametrizedEnrichmentO
   private void addNonVisitedResources(Model model2, Model targetModel, List<Resource> visitedResources,
                                       boolean mergeOtherStatements) {
     // add non-visited resources
-    List<Resource> nonVisitedSubjects = model2.listSubjects().toList();
-    nonVisitedSubjects.removeAll(visitedResources);
+    Set<Resource> nonVisitedSubjects = model2.listSubjects().toSet();
+    nonVisitedSubjects.removeAll(Sets.newHashSet(visitedResources));
     for (Resource nonVisitedSubject : nonVisitedSubjects) {
       if (mergeOtherStatements) {
         targetModel.add(model2.listStatements(nonVisitedSubject, null, (RDFNode) null));
