@@ -18,6 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 
 /**
  * Basic implementation of a fusion operator for geospatial properties. Expects
@@ -119,10 +120,11 @@ public class GeoFusionOperator implements DeerOperator {
 		// Fuse geometries
 		Model targetModel = ModelFactory.createDefaultModel();
 		List<Resource> visitedResources = Lists.newArrayList();
+		Map<Resource, List<Resource>> sameAsLookupTable = getSameAsResources(models.get(0));
 		ResIterator subjects = models.get(0).listSubjects();
 		while (subjects.hasNext()) {
 			Resource subject = subjects.next();
-			List<Resource> sameAsResources = getSameAsResources(models.get(0), subject);
+			List<Resource> sameAsResources = sameAsLookupTable.get(subject);
 			List<CandidateGeometry> candidateGeometries = getCandidateGeometries(models.get(0), models.get(1), subject,
 					sameAsResources);
 
@@ -305,6 +307,23 @@ public class GeoFusionOperator implements DeerOperator {
 		for (RDFNode rdfNode : sameAsNodes) {
 			if (rdfNode.isURIResource()) {
 				sameAsResources.add(rdfNode.asResource());
+			}
+		}
+		return sameAsResources;
+	}
+	
+	private Map<Resource, List<Resource>> getSameAsResources(Model sourceA) {
+		List<Statement> sameAsStatements = sourceA.listStatements(null, OWL.sameAs, (RDFNode) null).toList();
+		Map<Resource, List<Resource>> sameAsResources = Maps.newHashMap();
+		for (Statement stmt : sameAsStatements) {
+			if (stmt.getObject().isURIResource()) {
+				List<Resource> sameAsListForSubject = sameAsResources.get(stmt.getSubject());
+				if (sameAsListForSubject == null) {
+					sameAsResources.put(stmt.getSubject(), Lists.newArrayList(stmt.getObject().asResource()));
+				}
+				else {
+					sameAsListForSubject.add(stmt.getObject().asResource());
+				}
 			}
 		}
 		return sameAsResources;
