@@ -428,7 +428,7 @@ few given properties, this is easier to set up than to write a SPARQL query. </p
 is called enrichment operator.
 We call enrichment operators that take and return exactly one dataset  normal enrichment operators, while
 those accepting or emitting many datasets are called  hub enrichment operators. ">enrichment operator</a> for filtering only the predicates  <code>geo:lat</code>, <code>geo:long</code>, <code>rdfs:label</code> and <code>owl:sameAs</code>. </p>
-<pre><code class="lang-turtle">@prefix : &lt;http://deer.aksw.org/vocabulary/#&gt; .
+<pre><code class="lang-turtle">@prefix : &lt;http://w3id.org/deer/&gt; .
 @prefix rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt; .
 @prefix geo: &lt;http://www.w3.org/2003/01/geo/wgs84_pos#&gt; .
 @prefix owl: &lt;http://www.w3.org/2002/07/owl#&gt; .
@@ -501,7 +501,7 @@ those accepting or emitting many datasets are called  hub enrichment operators. 
 is called enrichment operator.
 We call enrichment operators that take and return exactly one dataset  normal enrichment operators, while
 those accepting or emitting many datasets are called  hub enrichment operators. ">enrichment operator</a> is used based on the LIMES configuration file &quot;limes_specs.xml&quot; and the source dataset is the one to be enriched.</p>
-<pre><code class="lang-turtle">@prefix : &lt;http://deer.aksw.org/vocabulary/#&gt; .
+<pre><code class="lang-turtle">@prefix : &lt;http://w3id.org/deer/&gt; .
 
 :node_linking
               :implementedIn     :LinkingEnrichmentOperator ;
@@ -524,7 +524,7 @@ those accepting or emitting many datasets are called  hub enrichment operators. 
 is called enrichment operator.
 We call enrichment operators that take and return exactly one dataset  normal enrichment operators, while
 those accepting or emitting many datasets are called  hub enrichment operators. ">enrichment operator</a> is used to find <code>dbo:abstract</code> from external dataset of DBpedia and export them using the <code>dcterms:description</code>.</p>
-<pre><code class="lang-turtle"> @prefix : &lt;http://deer.aksw.org/vocabulary/#&gt; .
+<pre><code class="lang-turtle"> @prefix : &lt;http://w3id.org/deer/&gt; .
  @prefix dbo: &lt;http://dbpedia.org/property/&gt; .
  @prefix dcterms: &lt;http://purl.org/dc/terms/&gt; .
 
@@ -551,7 +551,7 @@ In the current version of DEER, we rely on the FOX framework. In the following, 
 </code></pre><h2 id="clone">Clone Enrichment Operator </h2>
 <p>The idea behind the clone operator is to enable parallel enrichment of multiple copies of the same dataset. The clone operator takes one dataset as input and produces n &#x2265; 2 output datasets, which are all identical to the input dataset. </p>
 <p>In the following example, the clone operator is used to make 2 copies of the input dataset from <code>:node_1</code> into <code>:node_1_clone_1</code> and <code>:node_1_clone_2</code></p>
-<pre><code class="lang-turtle">@prefix : &lt;http://deer.aksw.org/vocabulary/#&gt; .
+<pre><code class="lang-turtle">@prefix : &lt;http://w3id.org/deer/&gt; .
 
 :node_clone
               :implementedIn     :CloneEnrichmentOperator 
@@ -561,7 +561,7 @@ In the current version of DEER, we rely on the FOX framework. In the following, 
 <h2 id="merge">Merge Enrichment Operator </h2>
 <p>The idea behind the merge operator is to enable combining datasets. The merge operator takes a set of n &#x2265; 2 input datasets and merges them into one output dataset containing all the input datasets&#x2019; triples. </p>
 <p>In the following example, the merge operator is used to combine the 2 input datasets of <code>:node_1</code> and <code>:node_2</code> into <code>:node_3</code></p>
-<pre><code class="lang-turtle">@prefix : &lt;http://deer.aksw.org/vocabulary/#&gt; .
+<pre><code class="lang-turtle">@prefix : &lt;http://w3id.org/deer/&gt; .
 
 :node_merge
               :implementedIn     :MergeEnrichmentOperator ;
@@ -586,7 +586,7 @@ In addtion to the common parameters, the geo-fusion operator have the following 
 </ul>
 </li>
 </ul>
-<pre><code class="lang-turtle">@prefix : &lt;http://deer.aksw.org/vocabulary/#&gt; .
+<pre><code class="lang-turtle">@prefix : &lt;http://w3id.org/deer/&gt; .
 @prefix rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt; .
 @prefix geo: &lt;http://www.w3.org/2003/01/geo/wgs84_pos#&gt; .
 @prefix owl: &lt;http://www.w3.org/2002/07/owl#&gt; .
@@ -605,7 +605,7 @@ is called enrichment operator.
 We call enrichment operators that take and return exactly one dataset  normal enrichment operators, while
 those accepting or emitting many datasets are called  hub enrichment operators. ">enrichment operator</a> accepts the two basic parameters of <code>:sourceSubjectAuthority</code> and <code>:targetSubjectAuthority</code> for specifying the source and target authorities respectively. </p>
 <p>In the following example, we use the <code>:sourceSubjectAuthority</code> of <code>http://dbpedia.org</code> and the <code>:targetSubjectAuthority</code> of <code>http://deer.org</code>. Such configuration will change a resource like <code>http://dbpedia.org/Berlin</code> to <code>http://deer.org/Berlin</code>. </p>
-<pre><code class="lang-turtle">@prefix : &lt;http://deer.aksw.org/vocabulary/#&gt; .
+<pre><code class="lang-turtle">@prefix : &lt;http://w3id.org/deer/&gt; .
 
 :node_a_conf
               :implementedIn     :AuthorityConformationEnrichmentOperator ;
@@ -625,7 +625,7 @@ those accepting or emitting many datasets are called  hub enrichment operators. 
 is called enrichment operator.
 We call enrichment operators that take and return exactly one dataset  normal enrichment operators, while
 those accepting or emitting many datasets are called  hub enrichment operators. ">enrichment operator</a> to change all instances of <code>rdf:label</code> to <code>SKOS:prefLabel</code>. For example, a triple as  <code>dbp:Berlin rdf:label &quot;Berlin&quot;</code> to <code>dbp:Berlin skos:prefLabel &quot;Berlin&quot;</code>. </p>
-<pre><code class="lang-turtle">@prefix : &lt;http://deer.aksw.org/vocabulary/#&gt; .
+<pre><code class="lang-turtle">@prefix : &lt;http://w3id.org/deer/&gt; .
 @prefix rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt; .
 @prefix skos: &lt;http://www.w3.org/2004/02/skos/core#&gt; .
 
@@ -649,7 +649,7 @@ is called enrichment operator.
 We call enrichment operators that take and return exactly one dataset  normal enrichment operators, while
 those accepting or emitting many datasets are called  hub enrichment operators. ">enrichment operator</a> to enrich cities from DBPedia
 with the distance to their western adjacent cities. </p>
-<pre><code class="lang-turtle">@prefix : &lt;http://deer.aksw.org/vocabulary/#&gt; .
+<pre><code class="lang-turtle">@prefix : &lt;http://w3id.org/deer/&gt; .
 @prefix dbp : &lt;http://dbpedia.org/property/&gt; .
 
 :node_geodistance
@@ -692,7 +692,7 @@ with the distance to their western adjacent cities. </p>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Predefined Enrichment Operators","level":"2.2.2","depth":2,"next":{"title":"Filter Enrichment Operator","level":"2.2.2.1","depth":3,"anchor":"#filter","path":"configuring_deer/enrichment_operators.md","ref":"./configuring_deer/enrichment_operators.md#filter","articles":[]},"previous":{"title":"Predefined IO","level":"2.2.1","depth":2,"path":"configuring_deer/io.md","ref":"./configuring_deer/io.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["theme-api"],"pluginsConfig":{"theme-api":{"languages":[{"lang":"java","name":"Java","default":true}],"split":true,"theme":"dark"},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"configuring_deer/enrichment_operators.md","mtime":"2018-12-20T11:51:46.830Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-12-20T12:00:34.311Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Predefined Enrichment Operators","level":"2.2.2","depth":2,"next":{"title":"Filter Enrichment Operator","level":"2.2.2.1","depth":3,"anchor":"#filter","path":"configuring_deer/enrichment_operators.md","ref":"./configuring_deer/enrichment_operators.md#filter","articles":[]},"previous":{"title":"Predefined IO","level":"2.2.1","depth":2,"path":"configuring_deer/io.md","ref":"./configuring_deer/io.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["theme-api"],"pluginsConfig":{"theme-api":{"languages":[{"lang":"java","name":"Java","default":true}],"split":true,"theme":"dark"},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"configuring_deer/enrichment_operators.md","mtime":"2019-03-08T19:00:09.611Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-03-08T19:06:04.831Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
