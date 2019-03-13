@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Configuring DEER · GitBook</title>
+        <title>Predefined Model Readers · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -64,7 +64,7 @@
     <link rel="next" href="readers.html" />
     
     
-    <link rel="prev" href="../understanding_deer/" />
+    <link rel="prev" href="./" />
     
 
     </head>
@@ -141,7 +141,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="2.2" data-path="./">
+        <li class="chapter " data-level="2.2" data-path="./">
             
                 <a href="./">
             
@@ -155,7 +155,7 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="2.2.1" data-path="readers.html">
+        <li class="chapter active" data-level="2.2.1" data-path="readers.html">
             
                 <a href="readers.html">
             
@@ -494,7 +494,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href=".." >Configuring DEER</a>
+        <a href=".." >Predefined Model Readers</a>
     </h1>
 </div>
 
@@ -509,76 +509,32 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="configuring-deer">Configuring DEER</h1>
-<p>DEER is configured using the 
-<a href="https://dice-group.github.io/faraday-cage/conf.html" target="_blank"><strong>FARADAY-CAGE</strong> Configuration Vocabulary</a>.
-The predefined plugins that ship with <em>deer-core</em> as well as their parameters live in the
-<code>http://w3id.org/deer/</code> namespace with the canonical prefix <code>deer:</code>.</p>
-<p>Predefined plugins are denominated by their class name, e.g.</p>
+                                <h1 id="predefined-modelreaders">Predefined ModelReaders</h1>
+<h2 id="file">File Model Reader (<code>deer:FileModelReader</code>) </h2>
+<p>This Model Reader can read in RDF from any file format supported by Apache Jena,
+either living on your hard disk or fetchable from the web.
+Choose one of its configuration parameters to select how it should operate:</p>
 <ul>
-<li><code>&lt;http://w3id.org/deer/FileModelReader&gt;</code> or <code>deer:FileModelReader</code></li>
-<li><code>&lt;http://w3id.org/deer/FileModelWriter&gt;</code> or <code>deer:FileModelWriter</code></li>
-<li><code>&lt;http://w3id.org/deer/FilterEnrichmentOperator&gt;</code> or <code>deer:FilterEnrichmentOperator</code></li>
+<li><code>deer:fromUri</code> if given, will operate in <em>web mode</em> and try to fetch the
+configuration from the given URI resource.</li>
+<li><code>deer:fromPath</code> if given, will operate in <em>file mode</em> and try to fetch the
+configuration from the given file path string literal.</li>
 </ul>
-<p>The parameter vocabulary of our predefined plugins is described more precisely in the following
-sections of this manual.</p>
-<p>Custom plugins should be identified by resources outside of the default namespace to prevent
-naming collisions.</p>
-<p>The following example configuration demonstrates how the predefined vocabulary works:  </p>
-<pre><code class="lang-turtle">@prefix : &lt;urn:example:demo/&gt; .
-@prefix fcage: &lt;http://w3id.org/fcage/&gt; .
-@prefix deer: &lt;http://w3id.org/deer/&gt; .
-@prefix rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt; .
-@prefix geo: &lt;http://www.w3.org/2003/01/geo/wgs84_pos#&gt; .
-@prefix owl: &lt;http://www.w3.org/2002/07/owl#&gt; .
-@prefix xsd: &lt;http://www.w3.org/2001/XMLSchema#&gt; .
-
-:node_reader1
-  a deer:SparqlModelReader ;
-  fcage:hasOutput :node_geofusion ;
-  deer:useSparqlDescribeOf &lt;http://dbpedia.org/resource/Paderborn&gt; ;
-  deer:fromEndpoint       &lt;http://dbpedia.org/sparql&gt; ;
-.
-
-:node_reader2
-  a deer:SparqlModelReader ;
-  fcage:hasOutput :node_conf ;
-  deer:useSparqlDescribeOf &lt;http://linkedgeodata.org/triplify/node240114473&gt; ;
-  deer:fromEndpoint &lt;http://linkedgeodata.org/sparql&gt; ;
-.
-
-:node_conf
-  a deer:AuthorityConformationEnrichmentOperator ;
-  fcage:hasOutput :node_geofusion ;
-  deer:operation [
-    deer:sourceAuthority &lt;http://dbpedia.org&gt; ;
-    deer:targetAuthority &lt;http://deer.org&gt; ;
-  ] ;
-.
-
-:node_geofusion
-  a deer:GeoFusionEnrichmentOperator ;
-  fcage:hasInput ( :node_conf :node_reader1 ) ;
-  fcage:hasOutput :node_filter ;
-  deer:fusionAction &quot;takeAll&quot; ;
-  deer:mergeOtherStatements &quot;true&quot;^^xsd:boolean ;
-.
-
-:node_filter
-  a deer:FilterEnrichmentOperator ;
-  fcage:hasOutput ( :node_writer ) ;
-  deer:selector [ deer:predicate geo:lat ] ,
-            [ deer:predicate geo:long ] ,
-            [ deer:predicate rdfs:label ] ,
-            [ deer:predicate owl:sameAs ] ;
-.
-
-:node_writer
-  a deer:FileModelWriter ;
-  deer:outputFile &quot;output_demo.ttl&quot; ;
-  deer:outputFormat &quot;Turtle&quot; ;
-.
-</code></pre>
+<h2 id="sparql">SPARQL Model Reader (<code>deer:SparqlModelReader</code>) </h2>
+<p>This Model Reader can read in RDF from a SPARQL endpoint.
+It can operate in two modes:</p>
+<ol>
+<li><strong>CONSTRUCT mode</strong>: Takes a SPARQL CONSTRUCT query as configuration and issues the query to
+the configured endpoint. </li>
+<li><strong>DESCRIBE mode</strong>: Takes a resource as configuration and issues a SPARQL DESCRIBE query for it to
+the configured endpoint.</li>
+</ol>
+<p>Its configuration parameters are:</p>
+<ul>
+<li><code>deer:fromEndpoint</code> <em>(required)</em> the URI resource of the endoint.</li>
+<li><code>deer:useSparqlDescribeOf</code> URI resource to query with SPARQL DESCRIBE</li>
+<li><code>deer:useSparqlConstruct</code> SPARQL CONSTRUCT query to be issued to the endpoint</li>
+</ul>
 
                                 
                                 </section>
@@ -612,7 +568,7 @@ naming collisions.</p>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Configuring DEER","level":"2.2","depth":1,"next":{"title":"Predefined Model Readers","level":"2.2.1","depth":2,"path":"configuring_deer/readers.md","ref":"./configuring_deer/readers.md","articles":[{"title":"File Model Reader","level":"2.2.1.1","depth":3,"anchor":"#file","path":"configuring_deer/readers.md","ref":"./configuring_deer/readers.md#file","articles":[]},{"title":"SPARQL Model Reader","level":"2.2.1.2","depth":3,"anchor":"#sparql","path":"configuring_deer/readers.md","ref":"./configuring_deer/readers.md#sparql","articles":[]}]},"previous":{"title":"About DEER","level":"2.1","depth":1,"path":"understanding_deer/index.md","ref":"./understanding_deer/index.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["theme-api"],"pluginsConfig":{"theme-api":{"languages":[{"lang":"java","name":"Java","default":true}],"split":true,"theme":"dark"},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"configuring_deer/index.md","mtime":"2019-03-13T11:51:20.525Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-03-13T11:56:43.622Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Predefined Model Readers","level":"2.2.1","depth":2,"next":{"title":"File Model Reader","level":"2.2.1.1","depth":3,"anchor":"#file","path":"configuring_deer/readers.md","ref":"./configuring_deer/readers.md#file","articles":[]},"previous":{"title":"Configuring DEER","level":"2.2","depth":1,"path":"configuring_deer/index.md","ref":"./configuring_deer/index.md","articles":[{"title":"Predefined Model Readers","level":"2.2.1","depth":2,"path":"configuring_deer/readers.md","ref":"./configuring_deer/readers.md","articles":[{"title":"File Model Reader","level":"2.2.1.1","depth":3,"anchor":"#file","path":"configuring_deer/readers.md","ref":"./configuring_deer/readers.md#file","articles":[]},{"title":"SPARQL Model Reader","level":"2.2.1.2","depth":3,"anchor":"#sparql","path":"configuring_deer/readers.md","ref":"./configuring_deer/readers.md#sparql","articles":[]}]},{"title":"Predefined Model Writers","level":"2.2.2","depth":2,"path":"configuring_deer/writers.md","ref":"./configuring_deer/writers.md","articles":[{"title":"File Model Writer","level":"2.2.2.1","depth":3,"anchor":"#file","path":"configuring_deer/writers.md","ref":"./configuring_deer/writers.md#file","articles":[]}]},{"title":"Predefined Wrappers","level":"2.2.3","depth":2,"path":"configuring_deer/wrappers.md","ref":"./configuring_deer/wrappers.md","articles":[{"title":"SPARQL Analytics Wrapper","level":"2.2.3.1","depth":3,"anchor":"#sparql-analytics","path":"configuring_deer/wrappers.md","ref":"./configuring_deer/wrappers.md#sparql-analytics","articles":[]}]},{"title":"Predefined Enrichment Operators","level":"2.2.4","depth":2,"path":"configuring_deer/enrichment_operators.md","ref":"./configuring_deer/enrichment_operators.md","articles":[{"title":"Filter Enrichment Operator","level":"2.2.4.1","depth":3,"anchor":"#filter","path":"configuring_deer/enrichment_operators.md","ref":"./configuring_deer/enrichment_operators.md#filter","articles":[]},{"title":"Linking Enrichment Operator","level":"2.2.4.2","depth":3,"anchor":"#linking","path":"configuring_deer/enrichment_operators.md","ref":"./configuring_deer/enrichment_operators.md#linking","articles":[]},{"title":"Dereferencing Enrichment Operator","level":"2.2.4.3","depth":3,"anchor":"#deref","path":"configuring_deer/enrichment_operators.md","ref":"./configuring_deer/enrichment_operators.md#deref","articles":[]},{"title":"NER Enrichment Operator","level":"2.2.4.4","depth":3,"anchor":"#ner","path":"configuring_deer/enrichment_operators.md","ref":"./configuring_deer/enrichment_operators.md#ner","articles":[]},{"title":"Clone Enrichment Operator","level":"2.2.4.5","depth":3,"anchor":"#clone","path":"configuring_deer/enrichment_operators.md","ref":"./configuring_deer/enrichment_operators.md#clone","articles":[]},{"title":"Merge Enrichment Operator","level":"2.2.4.6","depth":3,"anchor":"#merge","path":"configuring_deer/enrichment_operators.md","ref":"./configuring_deer/enrichment_operators.md#merge","articles":[]},{"title":"GeoFusion Enrichment Operator","level":"2.2.4.7","depth":3,"anchor":"#geofusion","path":"configuring_deer/enrichment_operators.md","ref":"./configuring_deer/enrichment_operators.md#geofusion","articles":[]},{"title":"Authority Conformation Enrichment Operator","level":"2.2.4.8","depth":3,"anchor":"#aconf","path":"configuring_deer/enrichment_operators.md","ref":"./configuring_deer/enrichment_operators.md#aconf","articles":[]},{"title":"Predicate Conformation Enrichment Operator","level":"2.2.4.9","depth":3,"anchor":"#pconf","path":"configuring_deer/enrichment_operators.md","ref":"./configuring_deer/enrichment_operators.md#pconf","articles":[]},{"title":"GeoDistance Enrichment Operator","level":"2.2.4.10","depth":3,"anchor":"#geodistance","path":"configuring_deer/enrichment_operators.md","ref":"./configuring_deer/enrichment_operators.md#geodistance","articles":[]},{"title":"SPARQL Update Enrichment Operator","level":"2.2.4.11","depth":3,"anchor":"#update","path":"configuring_deer/enrichment_operators.md","ref":"./configuring_deer/enrichment_operators.md#update","articles":[]}]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["theme-api"],"pluginsConfig":{"theme-api":{"languages":[{"lang":"java","name":"Java","default":true}],"split":true,"theme":"dark"},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"configuring_deer/readers.md","mtime":"2019-03-13T11:51:20.525Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-03-13T11:56:43.622Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
