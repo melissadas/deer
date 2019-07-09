@@ -51,6 +51,7 @@
         }
       }
     ''' ;
+.
 
 :fox
   a deer:NEREnrichmentOperator ;
