@@ -1,0 +1,212 @@
+@prefix : <urn:example:evaluation/ls1/> .
+@prefix fcage: <http://w3id.org/fcage/> .
+@prefix deer: <http://w3id.org/deer/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix geo: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix geos: <http://www.opengis.net/ont/geosparql#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix dbo: <http://dbpedia.org/ontology/> .
+@prefix dbr: <http://dbpedia.org/resource/> .
+@prefix dbp: <http://dbpedia.org/property/> .
+@prefix foxo:  <http://ns.aksw.org/fox/ontology#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix ex: <http://example.org/>.
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix my: <http://my.dataset.edu/>.
+
+## OLD STUFF - IGNORE ################################################START#
+#:dbp_persons
+##  a deer:SparqlModelReader ;
+#  deer:fromEndpoint <http://dbpedia.org/sparql> ;
+#  deer:useSparqlConstruct
+#    '''
+#      PREFIX owl: <http://www.w3.org/2002/07/owl#>
+#      PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+#      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+#      PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+#      PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+#      PREFIX dc: <http://purl.org/dc/elements/1.1/>
+#      PREFIX : <http://dbpedia.org/resource/>
+#      PREFIX dbo: <http://dbpedia.org/ontology/>
+#      PREFIX dbpedia2: <http://dbpedia.org/property/>
+#      PREFIX dbpedia: <http://dbpedia.org/>
+#      PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+#      construct {
+#        ?p foaf:name ?name .
+#        ?p dbo:birthPlace ?simplePlaceName .
+#        ?p rdfs:comment ?comment .
+#        ?p dbo:producerOf ?m .
+#        ?p dbo:almaMater ?almaMater .
+#        ?p dbo:birthDate ?date .
+#      } where {
+#        ?p dbo:birthPlace :Germany .
+#        ?p foaf:name ?name .
+#        ?p dbo:birthPlace ?place .
+#        ?place a dbo:Town .
+#        ?place rdfs:label ?placeName .
+#        ?p rdfs:comment ?comment .
+#        FILTER (lang(?comment) = 'en') .
+#        FILTER (lang(?placeName) = 'en') .
+#        BIND (STR(?placeName) AS ?simplePlaceName) .
+#        OPTIONAL {
+#          ?m dbo:producer ?p .
+#          ?p dbo:almaMater ?almaMater .
+#          ?p dbo:birthDate ?date .
+#        }
+#      }
+#    ''' ;
+#.
+#
+#:fox
+##  a deer:NEREnrichmentOperator ;
+#  fcage:hasInput ( :dbp_persons ) ;
+#  deer:literalProperty rdfs:comment ;
+#  deer:importProperty foxo:relatedTo ;
+#  deer:parallelism 10 ;
+#  deer:neType "all" ;
+#.
+#
+#
+#:dbp_places
+##  a deer:SparqlModelReader ;
+#  deer:fromEndpoint <http://dbpedia.org/sparql> ;
+#  deer:useSparqlConstruct
+#    '''
+#      PREFIX owl: <http://www.w3.org/2002/07/owl#>
+#      PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+#      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+#      PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+#      PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+#      PREFIX dc: <http://purl.org/dc/elements/1.1/>
+#      PREFIX : <http://dbpedia.org/resource/>
+#      PREFIX dbo: <http://dbpedia.org/ontology/>
+#      PREFIX dbpedia2: <http://dbpedia.org/property/>
+#      PREFIX dbpedia: <http://dbpedia.org/>
+#      PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+#      PREFIX wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#>
+#      construct {
+#        ?p a  dbo:Town .
+#        ?p dbo:country :Germany .
+#        ?p rdfs:comment ?comment .
+#        ?p rdfs:label ?simplePlaceName .
+#        ?p wgs:lat ?lat .
+#        ?p wgs:long ?long .
+#        ?p dbo:postalCode ?pc .
+#      } where {
+#        ?p a  dbo:Town .
+#        ?p dbo:country :Germany .
+#        ?p rdfs:label ?placeName .
+#        ?p wgs:lat ?lat .
+#        ?p wgs:long ?long .
+#        ?p dbo:postalCode ?pc .
+#        FILTER (lang(?placeName) = 'en') .
+#        #?p owl:sameAs <http://dbpedia.org/resource/Quakenbrück> .
+#        BIND (STR(?placeName) AS ?simplePlaceName) .
+#      }
+#    ''' ;
+#.
+#
+#:auth2
+#  fcage:hasInput ( :dbp_places ) ;
+##  a deer:AuthorityConformationEnrichmentOperator ;
+#  deer:operation [ deer:sourceAuthority dbr: ; deer:targetAuthority ex: ] ;
+#.
+#
+#####
+## Output Nodes
+#####
+#
+#:write_input
+##  a deer:FileModelWriter ;
+#  fcage:hasInput ( :dbp_persons ) ;
+#  deer:outputFile "./data/dbp_persons-test.nt" ;
+#  deer:outputFormat "NT" ;
+#.
+#
+#:write_input_places
+##  a deer:FileModelWriter ;
+#  fcage:hasInput ( :auth ) ;
+#  deer:outputFile "./data/dbp_places.nt" ;
+#  deer:outputFormat "NT" ;
+#.
+#
+#:write_ner_output
+##  a deer:FileModelWriter ;
+#  fcage:hasInput ( :fox ) ;
+#  deer:outputFile "./data/dbp_persons_ner.nt" ;
+#  deer:outputFormat "NT" ;
+#.
+
+## OLD STUFF - IGNORE #################################################END#
+
+:persons
+  a deer:FileModelReader ;
+  deer:fromPath "./data/dbr_person_train.nt" ;
+  deer:outputFormat "NT" ;
+.
+
+:places
+  a deer:FileModelReader ;
+  deer:fromPath "./data/ex_places_train.nt" ;
+  deer:outputFormat "NT" ;
+.
+
+:ner ## skipped cause precomputed
+#  a deer:NEREnrichmentOperator ;
+  fcage:hasInput ( :persons ) ;
+  deer:literalProperty rdfs:comment ;
+  deer:importProperty foxo:relatedTo ;
+  deer:parallelism 10 ;
+  deer:neType "all" ;
+.
+
+:auth
+  fcage:hasInput ( :persons ) ;
+  a deer:AuthorityConformationEnrichmentOperator ;
+  deer:operation [ deer:sourceAuthority dbr: ; deer:targetAuthority my: ] ;
+.
+
+:deref
+  fcage:hasInput ( :auth ) ;
+  a deer:DereferencingEnrichmentOperator ;
+  deer:operation [ deer:dereferencingProperty dbo:director ; ] ;
+.
+
+:link
+  fcage:hasInput ( :deref :places ) ;
+  a deer:LinkingEnrichmentOperator ;
+  deer:linkingPredicate my:birthPlace ;
+  deer:linkSpecification "exactmatch(x.http://dbpedia.org/ontology/birthPlace, y.http://www.w3.org/2000/01/rdf-schema#label)" ;
+  deer:threshold 1.0 ;
+.
+
+:pred
+  fcage:hasInput ( :link ) ;
+  a deer:PredicateConformationEnrichmentOperator ;
+  deer:operation [ deer:sourcePredicate foxo:relatedTo ; deer:targetPredicate my:relatedTo ] ;
+  deer:operation [ deer:sourcePredicate foaf:name ; deer:targetPredicate my:name ] ;
+.
+
+:filter
+  fcage:hasInput ( :pred ) ;
+  a deer:FilterEnrichmentOperator ;
+  deer:selector [ deer:predicate dbr: ] ,
+   [ deer:predicate dbo:director ] ,
+   [ deer:predicate dbo:producerOf ] ,
+   [ deer:predicate dbo:country ] ,
+   [ deer:predicate geo:lat ] ,
+   [ deer:predicate geo:long ] ,
+   [ deer:predicate rdf:type ] ,
+   [ deer:predicate rdfs:label ] ,
+   [ deer:predicate my:birthPlace ] ,
+   [ deer:predicate my:relatedTo ] ,
+   [ deer:predicate my:name ] ;
+.
+
+:write_ner_output
+  a deer:FileModelWriter ;
+  fcage:hasInput ( :filter ) ;
+  deer:outputFile "./data/target.nt" ;
+  deer:outputFormat "NT" ;
+.

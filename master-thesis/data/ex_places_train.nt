@@ -1,0 +1,6 @@
+<http://example.org/Quakenbrück> <http://dbpedia.org/ontology/postalCode> "49610" .
+<http://example.org/Quakenbrück> <http://dbpedia.org/ontology/country> <http://dbpedia.org/resource/Germany> .
+<http://example.org/Quakenbrück> <http://www.w3.org/2003/01/geo/wgs84_pos#long> "7.9574999809265136719"^^<http://www.w3.org/2001/XMLSchema#float> .
+<http://example.org/Quakenbrück> <http://www.w3.org/2003/01/geo/wgs84_pos#lat> "52.67722320556640625"^^<http://www.w3.org/2001/XMLSchema#float> .
+<http://example.org/Quakenbrück> <http://www.w3.org/2000/01/rdf-schema#label> "Quakenbrück" .
+<http://example.org/Quakenbrück> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/Town> .
