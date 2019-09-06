@@ -1,0 +1,51 @@
+@prefix : <urn:example:evaluation/ls1/> .
+@prefix fcage: <http://w3id.org/fcage/> .
+@prefix deer: <http://w3id.org/deer/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix geo: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix geos: <http://www.opengis.net/ont/geosparql#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix dbo: <http://dbpedia.org/ontology/> .
+@prefix dbr: <http://dbpedia.org/resource/> .
+@prefix dbp: <http://dbpedia.org/property/> .
+@prefix foxo:  <http://ns.aksw.org/fox/ontology#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix ex: <http://example.org/>.
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix my: <http://my.dataset.edu/>.
+
+:jamendo
+  a deer:FileModelReader ;
+  deer:fromPath "./data/jamendo_input.ttl" ;
+.
+
+:ner
+  a deer:NEREnrichmentOperator ;
+  fcage:hasInput ( :jamendo ) ;
+  deer:literalProperty rdfs:comment ;
+  deer:importProperty foxo:relatedTo ;
+  deer:parallelism 10 ;
+  deer:neType "all" ;
+.
+
+:write_ner_output2
+  a deer:FileModelWriter ;
+  fcage:hasInput ( :jamendo ) ;
+  deer:outputFile "./data/jamendo_test.nt" ;
+  deer:outputFormat "NT" ;
+.
+
+:write_ner_output
+  a deer:FileModelWriter ;
+  fcage:hasInput ( :ner ) ;
+  deer:outputFile "./data/jamendo_train.nt" ;
+  deer:outputFormat "NT" ;
+.
+#
+#:write_ner_output
+#  a deer:FileModelWriter ;
+#  fcage:hasInput ( :ner ) ;
+#  deer:outputFile "./data/target.nt" ;
+#  deer:outputFormat "NT" ;
+#.

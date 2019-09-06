@@ -161,52 +161,52 @@
   deer:neType "all" ;
 .
 
-:auth
-  fcage:hasInput ( :persons ) ;
-  a deer:AuthorityConformationEnrichmentOperator ;
-  deer:operation [ deer:sourceAuthority dbr: ; deer:targetAuthority my: ] ;
-.
+#:auth
+#  fcage:hasInput ( :persons ) ;
+#  a deer:AuthorityConformationEnrichmentOperator ;
+#  deer:operation [ deer:sourceAuthority dbr: ; deer:targetAuthority my: ] ;
+#.
 
-:deref
-  fcage:hasInput ( :auth ) ;
-  a deer:DereferencingEnrichmentOperator ;
-  deer:operation [ deer:dereferencingProperty dbo:director ; ] ;
-.
+#:deref
+#  fcage:hasInput ( :auth ) ;
+#  a deer:DereferencingEnrichmentOperator ;
+#  deer:operation [ deer:dereferencingProperty dbo:director ; ] ;
+#.
 
 :link
-  fcage:hasInput ( :deref :places ) ;
+  fcage:hasInput ( :persons :places ) ;
   a deer:LinkingEnrichmentOperator ;
   deer:linkingPredicate my:birthPlace ;
   deer:linkSpecification "exactmatch(x.http://dbpedia.org/ontology/birthPlace, y.http://www.w3.org/2000/01/rdf-schema#label)" ;
   deer:threshold 1.0 ;
 .
 
-:pred
-  fcage:hasInput ( :link ) ;
-  a deer:PredicateConformationEnrichmentOperator ;
-  deer:operation [ deer:sourcePredicate foxo:relatedTo ; deer:targetPredicate my:relatedTo ] ;
-  deer:operation [ deer:sourcePredicate foaf:name ; deer:targetPredicate my:name ] ;
-.
+#:pred
+#  fcage:hasInput ( :link ) ;
+#  a deer:PredicateConformationEnrichmentOperator ;
+#  deer:operation [ deer:sourcePredicate foxo:relatedTo ; deer:targetPredicate my:relatedTo ] ;
+#  deer:operation [ deer:sourcePredicate foaf:name ; deer:targetPredicate my:name ] ;
+#.
 
-:filter
-  fcage:hasInput ( :pred ) ;
-  a deer:FilterEnrichmentOperator ;
-  deer:selector [ deer:predicate dbr: ] ,
-   [ deer:predicate dbo:director ] ,
-   [ deer:predicate dbo:producerOf ] ,
-   [ deer:predicate dbo:country ] ,
-   [ deer:predicate geo:lat ] ,
-   [ deer:predicate geo:long ] ,
-   [ deer:predicate rdf:type ] ,
-   [ deer:predicate rdfs:label ] ,
-   [ deer:predicate my:birthPlace ] ,
-   [ deer:predicate my:relatedTo ] ,
-   [ deer:predicate my:name ] ;
-.
+#:filter
+#  fcage:hasInput ( :pred ) ;
+#  a deer:FilterEnrichmentOperator ;
+#  deer:selector [ deer:predicate dbr: ] ,
+#   [ deer:predicate dbo:director ] ,
+#   [ deer:predicate dbo:producerOf ] ,
+#   [ deer:predicate dbo:country ] ,
+#   [ deer:predicate geo:lat ] ,
+#   [ deer:predicate geo:long ] ,
+#   [ deer:predicate rdf:type ] ,
+#   [ deer:predicate rdfs:label ] ,
+#   [ deer:predicate my:birthPlace ] ,
+#   [ deer:predicate my:relatedTo ] ,
+#   [ deer:predicate my:name ] ;
+#.
 
 :write_ner_output
   a deer:FileModelWriter ;
-  fcage:hasInput ( :filter ) ;
-  deer:outputFile "./data/target.nt" ;
+  fcage:hasInput ( :link ) ;
+  deer:outputFile "./data/target_simpler.nt" ;
   deer:outputFormat "NT" ;
 .
