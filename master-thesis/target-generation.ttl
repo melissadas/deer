@@ -153,7 +153,7 @@
 .
 
 :ner ## skipped cause precomputed
-#  a deer:NEREnrichmentOperator ;
+  a deer:NEREnrichmentOperator ;
   fcage:hasInput ( :persons ) ;
   deer:literalProperty rdfs:comment ;
   deer:importProperty foxo:relatedTo ;
@@ -174,7 +174,7 @@
 #.
 
 :link
-  fcage:hasInput ( :persons :places ) ;
+  fcage:hasInput ( :ner :places ) ;
   a deer:LinkingEnrichmentOperator ;
   deer:linkingPredicate my:birthPlace ;
   deer:linkSpecification "exactmatch(x.http://dbpedia.org/ontology/birthPlace, y.http://www.w3.org/2000/01/rdf-schema#label)" ;
